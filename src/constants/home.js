@@ -17,8 +17,9 @@ export const HOME_PAGE_CONFIG = {
   BUTTON_CONFIG: {
     buttonProps: {
       variant: "contained",
-      children: "Get Started",
+      children: "Search",
       size: "large",
+      type: "submit",
       sx: {
         backgroundColor: "#2c3e50",
         color: "#fff",
@@ -26,6 +27,13 @@ export const HOME_PAGE_CONFIG = {
           backgroundColor: "#2c3e50",
         },
       },
+    },
+  },
+  INPUT_FIELD: {
+    inputProps: {
+      placeholder: "Enter your background and I’ll find the best scholarships just for you!",
+      size: "big",
+      sx: { width: { xs: 300, sm: 800 } },
     },
   },
 };
