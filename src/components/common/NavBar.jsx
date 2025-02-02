@@ -14,6 +14,7 @@ function NavBar() {
         marginTop: "20px",
         borderRadius: "16px",
         boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+
         border: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >
@@ -21,15 +22,17 @@ function NavBar() {
         sx={{
           justifyContent: "center",
           flexDirection: "row",
-          padding: { xs: "2px", sm: "12px" },
+          padding: { xs: "0px", sm: "12px" },
         }}
       >
         <Box
           sx={{
             display: "flex",
-            gap: 3,
+            gap: { xs: 0, sm: 6 },
             flexDirection: "row",
             width: "auto",
+
+
           }}
         >
           {MENU_ITEMS.map((item) => (

@@ -17,12 +17,13 @@ export const NAVBAR_STACK_CONFIG = ({
   sx: {
     fontSize: { xs: "0.9rem", sm: "1rem" },
     width: { xs: "100%", sm: "auto" },
-    padding: "10px 24px",
+    padding: { xs: "10px 10px", sm: "10px 24px" },
     color: "#ffffff",
     borderRadius: "8px",
     textTransform: "none",
     fontWeight: 500,
     letterSpacing: "0.5px",
+
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.15)",
       transform: "translateY(-2px)",
