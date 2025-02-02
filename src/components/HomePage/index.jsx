@@ -1,9 +1,16 @@
-import { Button, Container, Stack, Typography, Input, Notification } from "../common";
+import {
+  Button,
+  Container,
+  Stack,
+  Typography,
+  Input,
+  Notification,
+} from "../common";
 import { HOME_PAGE_CONFIG } from "@/constants";
 import FeaturePage from "./featurePage";
 import { useRouter } from "next/router";
 import { useState } from "react";
-
+import { useForm } from "@/helper";
 
 function HomePage() {
   const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD } = HOME_PAGE_CONFIG;
@@ -21,13 +28,21 @@ function HomePage() {
     setOpen(false);
   };
 
-  const handleSearch = () => {
-    if (INPUT_FIELD.inputProps.value) {
+  const handleSearch = ({ values }) => {
+    console.log(values);
+    if (values.searchQuery) {
       router.push("/scholarships");
     } else {
       showNotification("Please enter a search term");
     }
   };
+
+  const { onSubmit, onChange, onBlur } = useForm({
+    initialValues: {
+      search: "",
+    },
+    onSuccess: handleSearch,
+  });
 
   return (
     <>
@@ -40,22 +55,32 @@ function HomePage() {
           stackProps={{
             justifyContent: "center",
             alignItems: "center",
-            gap: {xs: 8, sm: 6},
+            gap: { xs: 8, sm: 6 },
           }}
         >
           <Typography {...HEADER_CONFIG} />
-          <Input {...INPUT_FIELD} />
-          <Button onClick={handleSearch} {...BUTTON_CONFIG} />
+          <form onSubmit={onSubmit}>
+            <Stack
+              stackProps={{
+                direction: "column",
+                gap: 2,
+                alignItems: "center",
+              }}
+            >
+              <Input {...INPUT_FIELD} onChange={onChange} onBlur={onBlur} />
+              <Button {...BUTTON_CONFIG} />
+            </Stack>
+          </form>
         </Stack>
+
         <FeaturePage />
       </Container>
-      <Notification 
+      <Notification
         message={notificationMessage}
         open={open}
         onClose={handleClose}
       />
     </>
-
   );
 }
 

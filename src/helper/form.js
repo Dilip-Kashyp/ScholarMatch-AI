@@ -1,38 +1,30 @@
 import { useFormik } from "formik";
 import { useRef } from "react";
 
-export function useForm(initialValues, onSubmit) {
+export function useForm({ initialValues, onSuccess }) {
   const isFormTriedToBeSubmitted = useRef(false);
 
   const formik = useFormik({
     initialValues,
-    onSubmit: async (values, formikHelpers) => {
-      isFormTriedToBeSubmitted.current = true;
+    onSubmit: async (values) => {
       try {
-        await formikHelpers.validateForm();
-        await onSubmit({ values });
+        onSuccess({ values });
       } catch (e) {
         console.error(e, "Form Error");
       }
     },
-    validateOnBlur: true,
-    validateOnChange: false,
   });
 
-  function resetError() {
-    isFormTriedToBeSubmitted.current = false;
-    formik.setErrors({});
-  }
-
   return {
-    values: formik.values,
-    errors: formik.errors,
-    touched: formik.touched,
-    handleChange: formik.handleChange,
-    handleBlur: formik.handleBlur,
-    handleSubmit: formik.handleSubmit,
-    resetError,
-    isSubmitting: formik.isSubmitting,
-    setFieldValue: formik.setFieldValue,
+    onChange: formik.handleChange,
+    onBlur: formik.handleBlur,
+    onSubmit: (event) => {
+      isFormTriedToBeSubmitted.current = true;
+      formik.handleSubmit(event);
+    },
+
+    onReset: formik.handleReset,
+    formValuesObj: formik.values,
+    setValues: formik.setValues,
   };
 }

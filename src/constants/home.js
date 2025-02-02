@@ -31,9 +31,17 @@ export const HOME_PAGE_CONFIG = {
   },
   INPUT_FIELD: {
     inputProps: {
-      placeholder: "Enter your background and I’ll find the best scholarships just for you!",
+      placeholder:
+        "Enter your background and I’ll find the best scholarships just for you!",
       size: "big",
-      sx: { width: { xs: 300, sm: 800 } },
+      name: "searchQuery",
+      variant: "outlined",
+      sx: {
+        width: { xs: 350, sm: 800 },
+        "& .MuiOutlinedInput-root": {
+          "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
+        },
+      },
     },
   },
 };
