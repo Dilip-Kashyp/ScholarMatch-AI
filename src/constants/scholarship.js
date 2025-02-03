@@ -1,8 +1,3 @@
-import {
-  CATEGORY_OPTIONS,
-  LOCATION_OPTIONS,
-  RELIGION_OPTIONS,
-} from "./options";
 export const SCHOLARSHIP_PAGE_CONFIG = {
   HEADER_CONFIG: {
     typographyProps: {
@@ -33,67 +28,16 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
       name: "searchQuery",
       variant: "outlined",
       sx: {
-        width: { xs: 320, sm: 600 },
+        width: { xs: 320, sm: 800 },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
+          marginBottom: "20px",
         },
       },
-    },
-  },
-  SCHOLARSHIP_CATEGORY_DROPDOWN: {
-    selectProps: {
-      name: "scholarshipCategory",
-    },
-    formControlProps: {
-      sx: {
-        width: { xs: 1, sm: 150 },
-        "& .MuiOutlinedInput-root": {
-          "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
-        },
-      },
-    },
-    inputLabelProps: {
-      children: " All Category",
     },
 
-    options: CATEGORY_OPTIONS,
   },
-  SCHOLARSHIP_RELIGION_DROPDOWN: {
-    selectProps: {
-      name: "scholarshipReligion",
-    },
-    formControlProps: {
-      sx: {
-        width: { xs: 1, sm: 150 },
-        "& .MuiOutlinedInput-root": {
-          "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
-        },
-      },
-    },
-    inputLabelProps: {
-      children: "All Religion",
-    },
 
-    options: RELIGION_OPTIONS,
-  },
-  SCHOLARSHIP_LOCATION_DROPDOWN: {
-    selectProps: {
-      name: "location",
-    },
-    formControlProps: {
-      sx: {
-        width: { xs: 1, sm: 150 },
-        "& .MuiOutlinedInput-root": {
-          "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
-        },
-      },
-    },
-    inputLabelProps: {
-      children: "All Location",
-    },
-
-    options: LOCATION_OPTIONS,
-  },
   LOADING_CONFIG: {
     children: "Loading scholarships...",
   },

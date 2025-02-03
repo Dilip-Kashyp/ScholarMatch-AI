@@ -15,14 +15,8 @@ import { useForm } from "@/helper";
 import { useState } from "react";
 
 function ScholarshipsPage() {
-  const {
-    HEADER_CONFIG,
-    SEARCH_INPUT,
-    SCHOLARSHIP_CATEGORY_DROPDOWN,
-    SCHOLARSHIP_RELIGION_DROPDOWN,
-    SCHOLARSHIP_LOCATION_DROPDOWN,
-    BUTTON_CONFIG,
-  } = SCHOLARSHIP_PAGE_CONFIG;
+  const { HEADER_CONFIG, SEARCH_INPUT, BUTTON_CONFIG } =
+    SCHOLARSHIP_PAGE_CONFIG;
 
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
@@ -77,7 +71,7 @@ function ScholarshipsPage() {
     <>
       <Container
         containerProps={{
-          className: "h-[100%] flex flex-col justify-center gap-24 py-12",
+          className: "h-[100vh] flex flex-col  gap-24 py-12",
         }}
       >
         <Paper
@@ -98,27 +92,11 @@ function ScholarshipsPage() {
               }}
             >
               <Input {...SEARCH_INPUT} onChange={onChange} onBlur={onBlur} />
-              <Dropdown
-                {...SCHOLARSHIP_CATEGORY_DROPDOWN}
-                onChange={onChange}
-                onBlur={onBlur}
-              />
-              <Dropdown
-                {...SCHOLARSHIP_RELIGION_DROPDOWN}
-                onChange={onChange}
-                onBlur={onBlur}
-              />
-              <Dropdown
-                {...SCHOLARSHIP_LOCATION_DROPDOWN}
-                onChange={onChange}
-                onBlur={onBlur}
-              />
             </Stack>
             <Button {...BUTTON_CONFIG} />
           </form>
         </Paper>
         <Stack stackProps={{ direction: "row", gap: 4, flexWrap: "wrap" }}>
-
           {data?.data?.map((scholarship) => (
             <Scholarships scholarship={scholarship} />
           ))}
