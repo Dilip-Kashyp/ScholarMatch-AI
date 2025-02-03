@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 async function getAllScholarshipsHandler(searchQuery) {
   console.log(searchQuery);
   const response = await apiClient({
-    url: "/scholarship/all-scholarships",
+    url: "/scholarships/all-scholarships",
     method: "POST",
     body: { searchQuery },
   });

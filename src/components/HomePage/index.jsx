@@ -24,10 +24,8 @@ function HomePage() {
     mutationConfig: {
       onSuccess: () => {
         router.push("/scholarships");
-
       },
-      onError: (error) => {
-        console.log(error);
+      onError: () => {
         showNotification("No scholarships found");
       },
     },
