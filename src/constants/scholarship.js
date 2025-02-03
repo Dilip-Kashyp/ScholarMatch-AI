@@ -18,7 +18,7 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
       name: "searchQuery",
       variant: "outlined",
       sx: {
-        width: { xs: 350, sm: 600 },
+        width: { xs: 320, sm: 600 },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
         },
@@ -31,7 +31,7 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
     },
     formControlProps: {
       sx: {
-        width: { xs: 150, sm: 150 },
+        width: { xs: 1, sm: 150 },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
         },
@@ -49,7 +49,7 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
     },
     formControlProps: {
       sx: {
-        width: { xs: 150, sm: 150 },
+        width: { xs: 1, sm: 150 },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
         },
@@ -67,7 +67,7 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
     },
     formControlProps: {
       sx: {
-        width: { xs: 150, sm: 150 },
+        width: { xs: 1, sm: 150 },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
         },

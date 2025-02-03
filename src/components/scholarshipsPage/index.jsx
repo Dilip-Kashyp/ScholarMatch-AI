@@ -37,7 +37,7 @@ function ScholarshipsPage() {
           </Stack>
           <Stack
             stackProps={{
-              direction: "row",
+              direction: { xs: "column", md: "row" },
               gap: 2,
               alignItems: "center",
               justifyContent: "space-between",

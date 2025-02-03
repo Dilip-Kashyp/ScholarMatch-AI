@@ -1,4 +1,5 @@
-const BASE_URL = "https://scholer-match-ai-be.onrender.com/api/v1";
+const BASE_URL = "https://scholar-match-ai-be.onrender.com/api/v1";
+
 
 
 
