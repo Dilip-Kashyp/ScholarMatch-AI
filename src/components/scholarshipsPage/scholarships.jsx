@@ -39,11 +39,11 @@ function Scholarships({ scholarship }) {
           <Typography {...CATEGORIES_CONFIG(scholarship.category)} />
         </Stack>
 
-        <Stack stackProps={{ direction: "row", gap: 1, flexWrap: "wrap" }}>
+        {/* <Stack stackProps={{ direction: "row", gap: 1, flexWrap: "wrap" }}>
           {scholarship.categories?.map((category, index) => (
             <Chip
               key={index}
-              label={category}
+              label={scholarship.category}
               sx={{
                 backgroundColor: "#f5f5f5",
                 color: "#2c3e50",
@@ -51,7 +51,7 @@ function Scholarships({ scholarship }) {
               }}
             />
           ))}
-        </Stack>
+        </Stack> */}
         <Stack
           stackProps={{
             direction: "row",

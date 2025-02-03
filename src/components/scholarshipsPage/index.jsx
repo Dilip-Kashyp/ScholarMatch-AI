@@ -9,23 +9,18 @@ import {
   Notification,
 } from "@/components";
 import { SCHOLARSHIP_PAGE_CONFIG } from "@/constants";
-import { useGetAllScholarships, useGetSearchedScholarships } from "@/api";
+import {  useGetSearchedScholarships } from "@/api";
 import Scholarships from "./scholarships";
 import { useForm } from "@/helper";
 import { useState } from "react";
 
 function ScholarshipsPage() {
-  const { HEADER_CONFIG, SEARCH_INPUT, BUTTON_CONFIG } =
+  const { HEADER_CONFIG, SEARCH_INPUT, BUTTON_CONFIG, GET_ALL_BUTTON_CONFIG } =
     SCHOLARSHIP_PAGE_CONFIG;
 
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const [data, setData] = useState([]);
-
-  // const { data, isLoading, isError } = useGetAllScholarships({
-  //   onSuccess: (response) => {},
-  //   onError: (error) => {},
-  // });
 
   const { mutate: getAllScholarships } = useGetSearchedScholarships({
     mutationConfig: {
@@ -71,7 +66,7 @@ function ScholarshipsPage() {
     <>
       <Container
         containerProps={{
-          className: "h-[100vh] flex flex-col  gap-24 py-12",
+          className: "min-h-screen flex flex-col gap-24 py-12",
         }}
       >
         <Paper
@@ -93,10 +88,21 @@ function ScholarshipsPage() {
             >
               <Input {...SEARCH_INPUT} onChange={onChange} onBlur={onBlur} />
             </Stack>
-            <Button {...BUTTON_CONFIG} />
+            <Stack stackProps={{ direction: "row", gap: 2 }}>
+              <Button {...BUTTON_CONFIG} />
+              <Button onClick={() => getAllScholarships()} {...GET_ALL_BUTTON_CONFIG} />
+            </Stack>
           </form>
+
         </Paper>
-        <Stack stackProps={{ direction: "row", gap: 4, flexWrap: "wrap" }}>
+        <Stack 
+          stackProps={{ 
+            direction: "row", 
+            gap: 4, 
+            flexWrap: "wrap",
+            className: "flex-grow"
+          }}
+        >
           {data?.data?.map((scholarship) => (
             <Scholarships scholarship={scholarship} />
           ))}

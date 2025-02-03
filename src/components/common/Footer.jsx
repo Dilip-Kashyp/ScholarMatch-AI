@@ -19,7 +19,7 @@ function Footer() {
       }}
     >
       <Typography {...FOOTER_TEXT} />
-      <Typography {...FOOTER_TEXT_2} />
+      {/* <Typography {...FOOTER_TEXT_2} /> */}
     </Stack>
   );
 }

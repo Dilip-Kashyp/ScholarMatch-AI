@@ -20,20 +20,37 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
       },
     },
   },
+
+  GET_ALL_BUTTON_CONFIG: {
+    buttonProps: {
+      variant: "contained",
+      children: "Get all",
+      size: "large",
+      sx: {
+
+        backgroundColor: "#2c3e50",
+        color: "#fff",
+        "&:hover": {
+          backgroundColor: "#2c3e50",
+        },
+      },
+    },
+  },
   SEARCH_INPUT: {
     inputProps: {
       placeholder:
-        "Enter your background and I’ll find the best scholarships just for you!",
+        "Enter your background and I'll find the best scholarships just for you!",
       size: "big",
       name: "searchQuery",
       variant: "outlined",
       sx: {
-        width: { xs: 320, sm: 800 },
+        width: { xs: 300, sm: 600 },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": { borderColor: "#2c3e50" },
           marginBottom: "20px",
         },
       },
+
     },
 
   },
@@ -69,10 +86,15 @@ export const SCHOLARSHIP_DETAILS_CARD_CONFIG = {
   },
 
   DEADLINE_CONFIG: (deadline) => {
+    const formattedDate = new Date(deadline).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
     return {
       typographyProps: {
         variant: "body1",
-        children: `Deadline: ${deadline}`,
+        children: `Deadline: ${formattedDate}`,
         sx: {
           color: "red",
         },
