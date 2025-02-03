@@ -114,11 +114,11 @@ export const SCHOLARSHIP_DETAILS_CARD_CONFIG = {
     };
   },
 
-  ELIGIBILITY_CONFIG: (minAge, maxAge) => {
+  ELIGIBILITY_CONFIG: (gender) => {
     return {
       typographyProps: {
         variant: "body1",
-        children: `Age : ${minAge} - ${maxAge}`,
+        children: `Gender : ${gender}`,
         sx: {
           color: "gray",
         },
