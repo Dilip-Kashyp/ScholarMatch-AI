@@ -2,7 +2,6 @@ import { apiClient } from "@/helper";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 async function getAllScholarshipsHandler(searchQuery) {
-  console.log(searchQuery);
   const response = await apiClient({
     url: "/scholarships/all-scholarships",
     method: "POST",

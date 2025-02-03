@@ -29,7 +29,7 @@ function ScholarshipsPage() {
         showNotification("Scholarship fetched successfully");
       },
       onError: (error) => {
-        console.log(error);
+        console.error(error);
         showNotification("No scholarships found");
       },
     },

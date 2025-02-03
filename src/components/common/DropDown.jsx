@@ -12,7 +12,6 @@ function Dropdown({
 }) {
   const getSelectedOptionObject = useCallback(
     (valueToBeSearched) => {
-      console.log(valueToBeSearched);
       return options?.find(({ value }) => value === valueToBeSearched);
     },
     [options]
@@ -20,7 +19,6 @@ function Dropdown({
 
   const selectedValue = useMemo(() => {
     const optionMatched = getSelectedOptionObject(value);
-    console.log(optionMatched);
     return optionMatched?.value || "";
   }, [getSelectedOptionObject, value]);
   return (

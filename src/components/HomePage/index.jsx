@@ -41,7 +41,6 @@ function HomePage() {
   };
 
   const handleSearch = ({ values }) => {
-    console.log(values);
     if (values.searchQuery) {
       getScholarshipsData(values.searchQuery);
     } else {

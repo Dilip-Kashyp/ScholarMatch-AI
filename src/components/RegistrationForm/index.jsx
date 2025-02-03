@@ -24,7 +24,7 @@ function RegistrationForm() {
   const router = useRouter();
 
   const handleFormSuccess = (values) => {
-    console.log("Form submitted successfully", values);
+
   };
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
@@ -37,7 +37,6 @@ function RegistrationForm() {
     },
     onSuccess: handleFormSuccess,
   });
-  console.log(errorObj);
 
   return (
     <Container
