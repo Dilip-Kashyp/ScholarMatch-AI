@@ -11,6 +11,7 @@ import FeaturePage from "./featurePage";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "@/helper";
+import { useGetSearchedScholarships } from "@/api";
 
 function HomePage() {
   const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD } = HOME_PAGE_CONFIG;
@@ -18,6 +19,19 @@ function HomePage() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
+
+  const { mutate: getScholarshipsData } = useGetSearchedScholarships({
+    mutationConfig: {
+      onSuccess: () => {
+        router.push("/scholarships");
+
+      },
+      onError: (error) => {
+        console.log(error);
+        showNotification("No scholarships found");
+      },
+    },
+  });
 
   const showNotification = (message) => {
     setNotificationMessage(message);
@@ -31,7 +45,7 @@ function HomePage() {
   const handleSearch = ({ values }) => {
     console.log(values);
     if (values.searchQuery) {
-      router.push("/scholarships");
+      getScholarshipsData(values.searchQuery);
     } else {
       showNotification("Please enter a search term");
     }

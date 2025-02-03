@@ -1,7 +1,7 @@
 export const FOOTER_CONFIG = {
   FOOTER_TEXT: {
     typographyProps: {
-      children: " 2025 ScholerMatch AI. All rights reserved.",
+      children: " 2025 ScholarMatch AI. All rights reserved.",
       variant: "body2",
     },
 
@@ -9,7 +9,7 @@ export const FOOTER_CONFIG = {
 
   FOOTER_TEXT_2: {
     typographyProps: {
-      children: "Contact: support@scholerMatchAI.com",
+      children: "Contact: support@scholarMatchAI.com",
       variant: "body2",
     },
 

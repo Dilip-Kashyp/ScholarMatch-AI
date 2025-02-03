@@ -24,7 +24,6 @@ export { default as SaveAltIcon } from "@mui/icons-material/SaveAlt";
 export { default as CardMembershipIcon } from "@mui/icons-material/CardMembership";
 export { default as AssessmentIcon } from "@mui/icons-material/Assessment";
 export { default as BusinessCenterOutlinedIcon } from "@mui/icons-material/BusinessCenterOutlined";
-export { default as AccessTimeOutlinedIcon } from "@mui/icons-material/AccessTimeOutlined";
 export { default as FmdGoodOutlinedIcon } from "@mui/icons-material/FmdGoodOutlined";
 export { default as AccountBalanceWalletOutlinedIcon } from "@mui/icons-material/AccountBalanceWalletOutlined";
 export { default as BookmarkBorderIcon } from "@mui/icons-material/BookmarkBorder";
