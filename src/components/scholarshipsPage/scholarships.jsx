@@ -34,7 +34,7 @@ function Scholarships({ scholarship }) {
           <Typography {...DEADLINE_CONFIG(scholarship.deadline)} />
           <Typography {...LOCATION_CONFIG(scholarship.location)} />
           <Typography
-            {...ELIGIBILITY_CONFIG(scholarship.min_age, scholarship.max_age)}
+            {...ELIGIBILITY_CONFIG(scholarship.gender )}
           />
           <Typography {...CATEGORIES_CONFIG(scholarship.category)} />
         </Stack>
