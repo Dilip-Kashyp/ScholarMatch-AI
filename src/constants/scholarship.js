@@ -27,7 +27,6 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
       children: "Get all",
       size: "large",
       sx: {
-
         backgroundColor: "#2c3e50",
         color: "#fff",
         "&:hover": {
@@ -50,13 +49,16 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
           marginBottom: "20px",
         },
       },
-
     },
-
   },
 
-  LOADING_CONFIG: {
-    children: "Loading scholarships...",
+  APPLICATION_COUNTER: (count) => {
+    return {
+      typographyProps: {
+        variant: "body1",
+        children: `Total Results: ${count}`,
+      },
+    };
   },
 };
 
@@ -86,10 +88,10 @@ export const SCHOLARSHIP_DETAILS_CARD_CONFIG = {
   },
 
   DEADLINE_CONFIG: (deadline) => {
-    const formattedDate = new Date(deadline).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    const formattedDate = new Date(deadline).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
     return {
       typographyProps: {

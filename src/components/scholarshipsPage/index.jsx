@@ -14,7 +14,7 @@ import { useForm } from "@/helper";
 import { useState } from "react";
 
 function ScholarshipsPage() {
-  const { HEADER_CONFIG, SEARCH_INPUT, BUTTON_CONFIG, GET_ALL_BUTTON_CONFIG } =
+  const { HEADER_CONFIG, SEARCH_INPUT, BUTTON_CONFIG, GET_ALL_BUTTON_CONFIG, APPLICATION_COUNTER } =
     SCHOLARSHIP_PAGE_CONFIG;
 
   const [open, setOpen] = useState(false);
@@ -22,12 +22,13 @@ function ScholarshipsPage() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingGetAll, setIsLoadingGetAll] = useState(false);
-
+  const [scholarshipCount, setScholarshipCount] = useState(0);
 
   const { mutate: getAllScholarships } = useGetSearchedScholarships({
     mutationConfig: {
       onSuccess: (response) => {
         setData(response);
+        setScholarshipCount(response?.data?.length || 0);
         setIsLoading(false);
         setIsLoadingGetAll(false);
         showNotification("Scholarship fetched successfully");
@@ -88,6 +89,7 @@ function ScholarshipsPage() {
         >
           <Stack>
             <Typography {...HEADER_CONFIG} />
+            <Typography {...APPLICATION_COUNTER(scholarshipCount)} />
           </Stack>
           <form onSubmit={onSubmit}>
             <Stack
