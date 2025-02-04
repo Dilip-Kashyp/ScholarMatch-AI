@@ -5,11 +5,12 @@ import {
   Typography,
   Button,
   Input,
+  Notification,
 } from "@/components";
 import { REGISTRATION_FORM_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
 import { useForm } from "@/helper";
-import { Formik } from "formik";
+import { useState } from "react";
 function RegistrationForm() {
   const {
     REGISTRATION_HEADER,
@@ -23,17 +24,22 @@ function RegistrationForm() {
   } = REGISTRATION_FORM_CONFIG;
   const router = useRouter();
 
-  const handleFormSuccess = (values) => {
+  const handleFormSuccess = (values) => {};
 
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
     initialValues: {
-      firstName: "Dilip",
-      lastName: "Kumar",
-      email: "dilip@gmail.com",
-      password: "123456",
-      confirmPassword: "123456",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
     onSuccess: handleFormSuccess,
   });
@@ -72,12 +78,18 @@ function RegistrationForm() {
               <Input {...NAME_INPUT} onChange={onChange} onBlur={onBlur} />
               <Input {...EMAIL_INPUT} onChange={onChange} onBlur={onBlur} />
               <Input {...PASSWORD_INPUT} onChange={onChange} onBlur={onBlur} />
-              <Button {...BUTTON} />
+              <Button
+                onClick={() => {
+                  setNotificationMessage("This page is under development");
+                  setOpen(true);
+                }}
+                {...BUTTON}
+              />
             </Stack>
           </form>
         </Stack>
-        <Stack
 
+        <Stack
           stackProps={{
             direction: "row",
             justifyContent: "center",
@@ -88,6 +100,11 @@ function RegistrationForm() {
           <Button {...LOGIN_LINK} onClick={() => router.push("/login")} />
         </Stack>
       </Paper>
+      <Notification
+        message={notificationMessage}
+        open={open}
+        onClose={handleClose}
+      />
     </Container>
   );
 }

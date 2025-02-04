@@ -1,10 +1,10 @@
 import {
-  Button,
   Container,
   Stack,
   Typography,
   Input,
   Notification,
+  LoadingButton,
 } from "../common";
 import { HOME_PAGE_CONFIG } from "@/constants";
 import FeaturePage from "./featurePage";
@@ -14,18 +14,21 @@ import { useForm } from "@/helper";
 import { useGetSearchedScholarships } from "@/api";
 
 function HomePage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD } = HOME_PAGE_CONFIG;
 
   const router = useRouter();
-  const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
 
   const { mutate: getScholarshipsData } = useGetSearchedScholarships({
     mutationConfig: {
       onSuccess: () => {
         router.push("/scholarships");
+        setIsLoading(false);
       },
       onError: () => {
+        setIsLoading(false);
         showNotification("No scholarships found");
       },
     },
@@ -43,6 +46,7 @@ function HomePage() {
   const handleSearch = ({ values }) => {
     if (values.searchQuery) {
       getScholarshipsData(values.searchQuery);
+      setIsLoading(true);
     } else {
       showNotification("Please enter a search term");
     }
@@ -79,7 +83,7 @@ function HomePage() {
               }}
             >
               <Input {...INPUT_FIELD} onChange={onChange} onBlur={onBlur} />
-              <Button {...BUTTON_CONFIG} />
+              <LoadingButton loading={isLoading} {...BUTTON_CONFIG} />
             </Stack>
           </form>
         </Stack>

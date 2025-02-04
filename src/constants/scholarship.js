@@ -130,7 +130,7 @@ export const SCHOLARSHIP_DETAILS_CARD_CONFIG = {
     return {
       typographyProps: {
         variant: "body1",
-        children: `Categorie : ${type}`,
+        children: `Category  : ${type}`,
         sx: {
           color: "gray",
         },

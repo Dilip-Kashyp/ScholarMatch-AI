@@ -4,10 +4,12 @@ import {
   Stack,
   Typography,
   Container,
+  Notification,
   Paper,
 } from "@/components";
 import { LOGIN_FORM_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 function LoginPage() {
   const {
@@ -20,6 +22,14 @@ function LoginPage() {
     CREATE_ACCOUNT_TEXT,
   } = LOGIN_FORM_CONFIG;
   const router = useRouter();
+
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Container
       containerProps={{
@@ -40,7 +50,13 @@ function LoginPage() {
           <Typography {...LOGIN_HEADER} />
           <Input {...EMAIL_INPUT} />
           <Input {...PASSWORD_INPUT} />
-          <Button {...BUTTON} />
+          <Button
+            onClick={() => {
+              setNotificationMessage("This page is under development");
+              setOpen(true);
+            }}
+            {...BUTTON}
+          />
         </Stack>
         <Button {...FORGOT_PASSWORD} />
         <Stack
@@ -59,6 +75,11 @@ function LoginPage() {
           />
         </Stack>
       </Paper>
+      <Notification
+        message={notificationMessage}
+        open={open}
+        onClose={handleClose}
+      />
     </Container>
   );
 }
