@@ -5,3 +5,4 @@ export * from "./footer";
 export * from "./registration"; 
 export * from "./loginform";
 export * from "./scholarship";
+export * from "./about";
