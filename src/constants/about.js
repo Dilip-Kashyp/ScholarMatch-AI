@@ -44,8 +44,9 @@ export const ABOUT_PAGE_CONFIG = {
       variant: "h6",
       // align: { xs: "center", md: "left" },
       children:
-        "Integrating modern technologies, this application securely connects to a PostgreSQL database to fetch scholarship records and uses an AI service to convert details into semantic vectors while extracting query parameters. It leverages Gemini functions: one extracts search details (like type, location, and amount) from a user’s query using the Gemini-pro model, and another converts text into vectors with the embedding-001 model. These vectors are stored in a Pinecone index and combined with traditional filters, ensuring students find precise, tailored scholarship recommendations.",
+        "This innovative AI-powered scholarship searcher revolutionizes the way users discover relevant scholarships by utilizing natural language queries. It enables users to simply type a question in plain English—like \"Show me scholarships for OBC students in Delhi\"—and seamlessly converts that request into a precise SQL query, searching the database for the most fitting results. At its core, this system harnesses the advanced capabilities of Google’s Gemini AI, which expertly interprets user queries and translates them into well-structured SQL statements. This powerful approach eliminates the complexities of understanding and writing database languages, making it incredibly easy for users to explore and apply for scholarships tailored to their needs. With this AI-driven tool, finding financial support for education becomes intuitive, accessible, and user-friendly.",
       sx: {
+
         color: "gray",
       },
     },
