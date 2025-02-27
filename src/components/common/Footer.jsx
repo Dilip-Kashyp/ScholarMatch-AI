@@ -13,7 +13,7 @@ function Footer() {
           color: "white",
           textAlign: "center",
           padding: "20px",
-          marginTop: "auto",
+          marginTop: "50px",
           width: "100%",
         },
       }}

@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import {
   Container,
   Stack,
@@ -5,27 +6,39 @@ import {
   Input,
   Notification,
   LoadingButton,
+  Scholarships,
 } from "../common";
 import { HOME_PAGE_CONFIG } from "@/constants";
-import FeaturePage from "./featurePage";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import { useForm } from "@/helper";
 import { useGetSearchedScholarships } from "@/api";
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD } = HOME_PAGE_CONFIG;
-
-  const router = useRouter();
+  const [data, setData] = useState([]);
   const [notificationMessage, setNotificationMessage] = useState("");
+  const scholarshipsRef = useRef(null);
+
+  const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD } = HOME_PAGE_CONFIG;
 
   const { mutate: getScholarshipsData } = useGetSearchedScholarships({
     mutationConfig: {
-      onSuccess: () => {
-        router.push("/scholarships");
-        setIsLoading(false);
+      onSuccess: (response) => {
+        if (response?.data?.length > 0) {
+          setData(response);
+          showNotification("Scholarships fetched successfully");
+          setIsLoading(false);
+          setTimeout(() => {
+            if (scholarshipsRef.current) {
+              scholarshipsRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          }, 300);
+        } else {
+          showNotification("No scholarships found");
+        }
       },
       onError: () => {
         setIsLoading(false);
@@ -33,6 +46,15 @@ function HomePage() {
       },
     },
   });
+
+  const handleFormSuccess = ({ values }) => {
+    if (values.searchQuery) {
+      getScholarshipsData(values.searchQuery);
+      setIsLoading(true);
+    } else {
+      showNotification("Please enter a search term");
+    }
+  };
 
   const showNotification = (message) => {
     setNotificationMessage(message);
@@ -43,27 +65,18 @@ function HomePage() {
     setOpen(false);
   };
 
-  const handleSearch = ({ values }) => {
-    if (values.searchQuery) {
-      getScholarshipsData(values.searchQuery);
-      setIsLoading(true);
-    } else {
-      showNotification("Please enter a search term");
-    }
-  };
-
   const { onSubmit, onChange, onBlur } = useForm({
     initialValues: {
       search: "",
     },
-    onSuccess: handleSearch,
+    onSuccess: handleFormSuccess,
   });
 
   return (
     <>
       <Container
         containerProps={{
-          className: "h-[100%] mt-32 flex flex-col justify-center gap-36",
+          className: "h-full mt-32 flex flex-col justify-center gap-36",
         }}
       >
         <Stack
@@ -87,14 +100,27 @@ function HomePage() {
             </Stack>
           </form>
         </Stack>
+        <div ref={scholarshipsRef} className="w-full">
+          <Stack
+            stackProps={{
+              direction: "row",
+              gap: 4,
+              flexWrap: "wrap",
+              className: "flex-grow",
+            }}
+          >
+            {data?.data?.map((scholarship) => (
+              <Scholarships key={scholarship.id} scholarship={scholarship} />
+            ))}
+          </Stack>
+        </div>
 
-        <FeaturePage />
+        <Notification
+          message={notificationMessage}
+          open={open}
+          onClose={handleClose}
+        />
       </Container>
-      <Notification
-        message={notificationMessage}
-        open={open}
-        onClose={handleClose}
-      />
     </>
   );
 }

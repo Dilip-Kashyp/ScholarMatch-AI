@@ -1,4 +1,4 @@
-import { Button, Chip, Paper, Stack, Typography } from "../common";
+import { Button, Chip, Paper, Stack, Typography } from ".";
 import { SCHOLARSHIP_DETAILS_CARD_CONFIG } from "@/constants";
 
 function Scholarships({ scholarship }) {

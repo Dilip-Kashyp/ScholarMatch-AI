@@ -1,5 +1,6 @@
 import { Container, Paper, Stack, Typography } from "@/components";
 import { ABOUT_PAGE_CONFIG, SEARCH_QUERIES } from "@/constants";
+import FeaturePage from "./featurePage";
 
 function AboutPage() {
   const {
@@ -23,34 +24,7 @@ function AboutPage() {
             className: "p-4 md:p-8 min-w-[80%] max-w-[100%] flex flex-col gap-6",
           }}
         >
-          <Stack
-
-            stackProps={{ direction: "column", gap: 3,  }}
-          >
-            <Typography {...HEADER_CONFIG} />
-            <Typography {...DESCRIPTION_CONFIG} />
-            <Stack
-              stackProps={{ direction: "column", gap: 3 }}
-            >
-              {SEARCH_QUERIES?.map((query, index) => (
-                <Typography key={index} {...SEARCH_QUERY_CONFIG(query)} />
-              ))}
-            </Stack>
-          </Stack>
-          <Stack
-
-            stackProps={{ direction: "column", gap: 3, alignItems: "center" }}
-
-          >
-            <Typography {...HOW_IT_WORKS_HEADER_CONFIG} />
-            <Typography {...HOW_IT_WORKS_DESCRIPTION_CONFIG} />
-          </Stack>
-          {/* <Stack
-            stackProps={{ direction: "column", gap: 3, alignItems: "center", }}
-          >
-            <Typography {...TECHSTACK_HEADER_CONFIG} />
-            <Typography {...TECHSTACK_DESCRIPTION_CONFIG} />
-          </Stack> */}
+          <FeaturePage />
         </Paper>
       </Container>
     </>

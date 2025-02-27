@@ -6,10 +6,10 @@ import {
   Typography,
   Notification,
   LoadingButton,
+  Scholarships
 } from "@/components";
 import { SCHOLARSHIP_PAGE_CONFIG } from "@/constants";
 import { useGetSearchedScholarships } from "@/api";
-import Scholarships from "./scholarships";
 import { useForm } from "@/helper";
 import { useState } from "react";
 
@@ -41,7 +41,6 @@ function ScholarshipsPage() {
     },
   });
 
-  console.log("isLoading", isLoading);
 
   const handleFormSuccess = ({ values }) => {
     if (values.searchQuery) {
@@ -70,10 +69,6 @@ function ScholarshipsPage() {
   const handleClose = () => {
     setOpen(false);
   };
-
-  if (isLoading) {
-    console.log("isLoading", isLoading);
-  }
 
   return (
     <>
