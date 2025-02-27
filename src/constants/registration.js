@@ -15,17 +15,17 @@ export const REGISTRATION_FORM_CONFIG = {
   },
   PASSWORD_INPUT: {
     inputProps: {
+      name: "password",
       label: "Password",
       required: true,
       type: "password",
-      name: "password",
     },
   },
   NAME_INPUT: {
     inputProps: {
       label: "First Last Name",
       required: true,
-      name: "firstName",
+      name: "name",
       type: "text",
     },
   },

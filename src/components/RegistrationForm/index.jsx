@@ -6,11 +6,13 @@ import {
   Button,
   Input,
   Notification,
+  LoadingButton,
 } from "@/components";
 import { REGISTRATION_FORM_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
 import { useForm } from "@/helper";
 import { useState } from "react";
+import { useRegistrationHandler } from "@/api";
 function RegistrationForm() {
   const {
     REGISTRATION_HEADER,
@@ -23,11 +25,27 @@ function RegistrationForm() {
     ALREADY_HAVE_ACCOUNT,
   } = REGISTRATION_FORM_CONFIG;
   const router = useRouter();
-
-  const handleFormSuccess = (values) => {};
-
   const [notificationMessage, setNotificationMessage] = useState("");
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFormSuccess = (values) => {
+    setIsLoading(true);
+    registrationHander(values.values);
+  };
+
+  const { mutate: registrationHander } = useRegistrationHandler({
+    mutationConfig: {
+      onSuccess: () => {
+        showNotification("Account created successfully");
+        setIsLoading(false);
+      },
+      onError: () => {
+        setIsLoading(false);
+        showNotification("Email already exists");
+      },
+    },
+  });
 
   const handleClose = () => {
     setOpen(false);
@@ -35,14 +53,17 @@ function RegistrationForm() {
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
     onSuccess: handleFormSuccess,
   });
+
+  const showNotification = (message) => {
+    setNotificationMessage(message);
+    setOpen(true);
+  };
 
   return (
     <Container
@@ -78,13 +99,7 @@ function RegistrationForm() {
               <Input {...NAME_INPUT} onChange={onChange} onBlur={onBlur} />
               <Input {...EMAIL_INPUT} onChange={onChange} onBlur={onBlur} />
               <Input {...PASSWORD_INPUT} onChange={onChange} onBlur={onBlur} />
-              <Button
-                onClick={() => {
-                  setNotificationMessage("This page is under development");
-                  setOpen(true);
-                }}
-                {...BUTTON}
-              />
+              <LoadingButton loading={isLoading} {...BUTTON} />
             </Stack>
           </form>
         </Stack>

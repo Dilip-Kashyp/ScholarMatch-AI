@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Button,
   Input,
@@ -6,10 +7,12 @@ import {
   Container,
   Notification,
   Paper,
+  LoadingButton,
 } from "@/components";
 import { LOGIN_FORM_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useLoginHandler } from "@/api";
+import { useForm } from "@/helper";
 
 function LoginPage() {
   const {
@@ -25,9 +28,46 @@ function LoginPage() {
 
   const [notificationMessage, setNotificationMessage] = useState("");
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const { mutate: LoginHander } = useLoginHandler({
+    mutationConfig: {
+      onSuccess: (response) => {
+        if (response?.token) {
+          setData(response);
+          showNotification("Login successfully");
+          setIsLoading(false);
+          router.push("/dashboard");
+        }
+      },
+      onError: () => {
+        setIsLoading(false);
+        showNotification("No User found");
+      },
+    },
+  });
+
+  const handleFormSuccess = (values) => {
+    setIsLoading(true);
+    LoginHander(values.values);
+  };
+
+  const { onSubmit, errorObj, onBlur, onChange } = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSuccess: handleFormSuccess,
+  });
+
+  const showNotification = (message) => {
+    setNotificationMessage(message);
+    setOpen(true);
   };
 
   return (
@@ -42,22 +82,23 @@ function LoginPage() {
           className: "p-4 w-full",
         }}
       >
-        <Stack
-          stackProps={{
-            gap: 2,
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit(e);
           }}
         >
-          <Typography {...LOGIN_HEADER} />
-          <Input {...EMAIL_INPUT} />
-          <Input {...PASSWORD_INPUT} />
-          <Button
-            onClick={() => {
-              setNotificationMessage("This page is under development");
-              setOpen(true);
+          <Stack
+            stackProps={{
+              gap: 2,
             }}
-            {...BUTTON}
-          />
-        </Stack>
+          >
+            <Typography {...LOGIN_HEADER} />
+            <Input {...EMAIL_INPUT} onChange={onChange} onBlur={onBlur} />
+            <Input {...PASSWORD_INPUT} onChange={onChange} onBlur={onBlur} />
+            <LoadingButton {...BUTTON} loading={isLoading} />
+          </Stack>
+        </form>
         <Button {...FORGOT_PASSWORD} />
         <Stack
           stackProps={{

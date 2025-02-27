@@ -1,8 +1,8 @@
-import { AboutPageContainer } from "@/containers";
+import { DashboardContainer } from "@/containers";
 import { DashboardLayout } from "@/components";
 
 function page() {
-  return <AboutPageContainer />;
+  return <DashboardContainer />;
 }
 
 page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

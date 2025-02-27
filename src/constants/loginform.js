@@ -39,6 +39,7 @@ export const LOGIN_FORM_CONFIG = {
       label: "Email",
       required: true,
       name: "email",
+      type: "email",
     },
   },
   PASSWORD_INPUT: {
@@ -46,12 +47,14 @@ export const LOGIN_FORM_CONFIG = {
       label: "Password",
       required: true,
       name: "password",
+      type: "password",
     },
   },
   BUTTON: {
     buttonProps: {
       children: "Login",
       variant: "contained",
+      type: "submit",
       size: "large",
       sx: {
         backgroundColor: "#2c3e50",

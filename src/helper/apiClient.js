@@ -1,5 +1,5 @@
-const BASE_URL = "https://scholar-match-ai-be.onrender.com/api/v1";
-// const BASE_URL = "http://localhost:5400/api/v1";
+// const BASE_URL = "https://scholar-match-ai-be.onrender.com/api/v1";
+const BASE_URL = "http://localhost:5400/api/v1";
 
 export async function apiClient({
   url,
