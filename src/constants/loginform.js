@@ -62,4 +62,9 @@ export const LOGIN_FORM_CONFIG = {
       },
     },
   },
+  NOTIFICATIONS_MESSAGES: {
+    SUCCESS: { message: "Login successfully" },
+    ERROR: { message: "Login Failed, try again!" },
+    SEARCH_ERROR: { message: "Please enter a search term" },
+  },
 };

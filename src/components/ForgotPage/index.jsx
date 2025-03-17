@@ -8,39 +8,38 @@ import {
   Paper,
   LoadingButton,
 } from "@/components";
-import { LOGIN_FORM_CONFIG } from "@/constants";
+import { FORGET_PASSWORD_FORM_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
 import { useLoginHandler } from "@/api";
 import { useForm, useNotification } from "@/helper";
-import { DASHBOARD_URL, FORGOT_PASSWORD_URL, REGISTER_URL } from "@/constants";
+import { ACCOUNT_VERIFICATION_URL } from "@/constants";
 
-function LoginPage() {
+function ForgotPasswordPage() {
   const {
-    LOGIN_HEADER,
+    FORGET_PASSWORD_HEADER,
     EMAIL_INPUT,
-    PASSWORD_INPUT,
     BUTTON,
-    FORGOT_PASSWORD,
-    SIGNUP,
-    CREATE_ACCOUNT_TEXT,
     NOTIFICATIONS_MESSAGES,
-  } = LOGIN_FORM_CONFIG;
+  } = FORGET_PASSWORD_FORM_CONFIG;
   const router = useRouter();
 
   const { showNotification } = useNotification();
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState(null);
+  const [email, setEmail] = useState(false);
 
   const { mutate: LoginHander } = useLoginHandler({
     mutationConfig: {
-      onSuccess: (response) => {
-        if (response?.token) {
-          setData(response);
-          showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
-          setIsLoading(false);
-          router.push(DASHBOARD_URL);
-        }
+      onSuccess: () => {
+        setData(response);
+        showNotification(NOTIFICATIONS_MESSAGES.OTP_SUCCESS);
+        setIsLoading(false);
+        router.push(
+          {
+            pathname: ACCOUNT_VERIFICATION_URL,
+            query: { email: email },
+          },
+          ACCOUNT_VERIFICATION_URL
+        );
       },
       onError: () => {
         setIsLoading(false);
@@ -51,13 +50,13 @@ function LoginPage() {
 
   const handleFormSuccess = (values) => {
     setIsLoading(true);
+    setEmail(values.values);
     LoginHander(values.values);
   };
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
     initialValues: {
       email: "",
-      password: "",
     },
     onSuccess: handleFormSuccess,
   });
@@ -85,36 +84,14 @@ function LoginPage() {
               gap: 2,
             }}
           >
-            <Typography {...LOGIN_HEADER} />
+            <Typography {...FORGET_PASSWORD_HEADER} />
             <Input {...EMAIL_INPUT} onChange={onChange} onBlur={onBlur} />
-            <Input {...PASSWORD_INPUT} onChange={onChange} onBlur={onBlur} />
             <LoadingButton {...BUTTON} loading={isLoading} />
           </Stack>
         </form>
-        <Button
-          {...FORGOT_PASSWORD}
-          onClick={() => {
-            router.push(FORGOT_PASSWORD_URL);
-          }}
-        />
-        <Stack
-          stackProps={{
-            direction: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography {...CREATE_ACCOUNT_TEXT} />
-          <Button
-            {...SIGNUP}
-            onClick={() => {
-              router.push(REGISTER_URL);
-            }}
-          />
-        </Stack>
       </Paper>
     </Container>
   );
 }
 
-export default LoginPage;
+export default ForgotPasswordPage;

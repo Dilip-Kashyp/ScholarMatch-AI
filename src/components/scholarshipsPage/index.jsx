@@ -6,23 +6,30 @@ import {
   Typography,
   Notification,
   LoadingButton,
-  Scholarships
+  Scholarships,
 } from "@/components";
 import { SCHOLARSHIP_PAGE_CONFIG } from "@/constants";
 import { useGetSearchedScholarships } from "@/api";
-import { useForm } from "@/helper";
+import { useForm, useNotification } from "@/helper";
 import { useState } from "react";
 
 function ScholarshipsPage() {
-  const { HEADER_CONFIG, SEARCH_INPUT, BUTTON_CONFIG, GET_ALL_BUTTON_CONFIG, APPLICATION_COUNTER } =
-    SCHOLARSHIP_PAGE_CONFIG;
+  const {
+    HEADER_CONFIG,
+    SEARCH_INPUT,
+    BUTTON_CONFIG,
+    GET_ALL_BUTTON_CONFIG,
+    APPLICATION_COUNTER,
+    NOTIFICATIONS_MESSAGES,
+  } = SCHOLARSHIP_PAGE_CONFIG;
 
   const [open, setOpen] = useState(false);
-  const [notificationMessage, setNotificationMessage] = useState("");
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingGetAll, setIsLoadingGetAll] = useState(false);
   const [scholarshipCount, setScholarshipCount] = useState(0);
+
+  const { showNotification } = useNotification();
 
   const { mutate: getAllScholarships } = useGetSearchedScholarships({
     mutationConfig: {
@@ -31,23 +38,22 @@ function ScholarshipsPage() {
         setScholarshipCount(response?.data?.length || 0);
         setIsLoading(false);
         setIsLoadingGetAll(false);
-        showNotification("Scholarship fetched successfully");
+        showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
       },
       onError: (error) => {
         setIsLoading(false);
         console.error(error);
-        showNotification("No scholarships found");
+        showNotification(NOTIFICATIONS_MESSAGES.ERROR);
       },
     },
   });
-
 
   const handleFormSuccess = ({ values }) => {
     if (values.searchQuery) {
       getAllScholarships(values.searchQuery);
       setIsLoading(true);
     } else {
-      showNotification("Please enter a search term");
+      showNotification(NOTIFICATIONS_MESSAGES.SEARCH_ERROR);
     }
   };
 
@@ -60,15 +66,6 @@ function ScholarshipsPage() {
     },
     onSuccess: handleFormSuccess,
   });
-
-  const showNotification = (message) => {
-    setNotificationMessage(message);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <>
@@ -107,7 +104,6 @@ function ScholarshipsPage() {
                 }}
                 {...GET_ALL_BUTTON_CONFIG}
               />
-
             </Stack>
           </form>
         </Paper>
@@ -123,11 +119,6 @@ function ScholarshipsPage() {
             <Scholarships scholarship={scholarship} />
           ))}
         </Stack>
-        <Notification
-          message={notificationMessage}
-          open={open}
-          onClose={handleClose}
-        />
       </Container>
     </>
   );

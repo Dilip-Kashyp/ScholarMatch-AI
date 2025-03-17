@@ -9,24 +9,24 @@ import {
   Scholarships,
 } from "../common";
 import { HOME_PAGE_CONFIG } from "@/constants";
-import { useForm } from "@/helper";
+import { useForm, useNotification } from "@/helper";
 import { useGetSearchedScholarships } from "@/api";
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [notificationMessage, setNotificationMessage] = useState("");
   const scholarshipsRef = useRef(null);
-
-  const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD } = HOME_PAGE_CONFIG;
+  const { showNotification } = useNotification();
+  const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD, NOTIFICATIONS_MESSAGES } =
+    HOME_PAGE_CONFIG;
 
   const { mutate: getScholarshipsData } = useGetSearchedScholarships({
     mutationConfig: {
       onSuccess: (response) => {
         if (response?.data?.length > 0) {
           setData(response);
-          showNotification("Scholarships fetched successfully");
+          showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
           setIsLoading(false);
           setTimeout(() => {
             if (scholarshipsRef.current) {
@@ -37,12 +37,12 @@ function HomePage() {
             }
           }, 300);
         } else {
-          showNotification("No scholarships found");
+          showNotification(NOTIFICATIONS_MESSAGES.ERROR);
         }
       },
       onError: () => {
         setIsLoading(false);
-        showNotification("No scholarships found");
+        showNotification(NOTIFICATIONS_MESSAGES.ERROR);
       },
     },
   });
@@ -52,17 +52,8 @@ function HomePage() {
       getScholarshipsData(values.searchQuery);
       setIsLoading(true);
     } else {
-      showNotification("Please enter a search term");
+      showNotification(NOTIFICATIONS_MESSAGES.SEARCH_ERROR);
     }
-  };
-
-  const showNotification = (message) => {
-    setNotificationMessage(message);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const { onSubmit, onChange, onBlur } = useForm({
@@ -114,12 +105,6 @@ function HomePage() {
             ))}
           </Stack>
         </div>
-
-        <Notification
-          message={notificationMessage}
-          open={open}
-          onClose={handleClose}
-        />
       </Container>
     </>
   );

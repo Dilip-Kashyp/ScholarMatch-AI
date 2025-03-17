@@ -44,6 +44,11 @@ export const HOME_PAGE_CONFIG = {
       },
     },
   },
+  NOTIFICATIONS_MESSAGES: {
+    SUCCESS: { message: "Scholarships fetched successfully" },
+    ERROR: { message: "No scholarships found" },
+    SEARCH_ERROR: { message: "Please enter a search term" },
+  },
 };
 
 export const FEATURE_PAGE_CONFIG = {
