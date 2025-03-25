@@ -41,6 +41,7 @@ function ScholarshipsPage() {
         showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
       },
       onError: (error) => {
+        setIsLoadingGetAll(false);
         setIsLoading(false);
         console.error(error);
         showNotification(NOTIFICATIONS_MESSAGES.ERROR);
