@@ -10,7 +10,7 @@ import {
 } from "@/components";
 import { SCHOLARSHIP_PAGE_CONFIG } from "@/constants";
 import { useGetSearchedScholarships } from "@/api";
-import { useForm, useNotification } from "@/helper";
+import { getresponseError, useForm, useNotification } from "@/helper";
 import { useState } from "react";
 
 function ScholarshipsPage() {
@@ -22,48 +22,32 @@ function ScholarshipsPage() {
     APPLICATION_COUNTER,
     NOTIFICATIONS_MESSAGES,
   } = SCHOLARSHIP_PAGE_CONFIG;
-
-  const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingGetAll, setIsLoadingGetAll] = useState(false);
   const [scholarshipCount, setScholarshipCount] = useState(0);
 
   const { showNotification } = useNotification();
 
-  const { mutate: getAllScholarships } = useGetSearchedScholarships({
+  const getAllScholarships = useGetSearchedScholarships({
     mutationConfig: {
       onSuccess: (response) => {
         setData(response);
         setScholarshipCount(response?.data?.length || 0);
-        setIsLoading(false);
-        setIsLoadingGetAll(false);
         showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
       },
       onError: (error) => {
-        setIsLoadingGetAll(false);
-        setIsLoading(false);
         console.error(error);
-        showNotification(NOTIFICATIONS_MESSAGES.ERROR);
+        showNotification({ ...getresponseError(error) });
       },
     },
   });
 
   const handleFormSuccess = ({ values }) => {
-    if (values.searchQuery) {
-      getAllScholarships(values.searchQuery);
-      setIsLoading(true);
-    } else {
-      showNotification(NOTIFICATIONS_MESSAGES.SEARCH_ERROR);
-    }
+    getAllScholarships.mutate({ date: { searchQuery: values.searchQuery } });
   };
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
     initialValues: {
       searchQuery: "",
-      scholarshipCategory: "",
-      scholarshipReligion: "",
-      scholarshipLocation: "",
     },
     onSuccess: handleFormSuccess,
   });
@@ -84,7 +68,12 @@ function ScholarshipsPage() {
             <Typography {...HEADER_CONFIG} />
             <Typography {...APPLICATION_COUNTER(scholarshipCount)} />
           </Stack>
-          <form onSubmit={onSubmit}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit(e);
+            }}
+          >
             <Stack
               stackProps={{
                 direction: { xs: "column", md: "row" },
@@ -96,14 +85,9 @@ function ScholarshipsPage() {
               <Input {...SEARCH_INPUT} onChange={onChange} onBlur={onBlur} />
             </Stack>
             <Stack stackProps={{ direction: "row", gap: 2 }}>
-              <LoadingButton loading={isLoading} {...BUTTON_CONFIG} />
               <LoadingButton
-                loading={isLoadingGetAll}
-                onClick={() => {
-                  getAllScholarships();
-                  setIsLoadingGetAll(true);
-                }}
-                {...GET_ALL_BUTTON_CONFIG}
+                loading={getAllScholarships.isPending}
+                {...BUTTON_CONFIG}
               />
             </Stack>
           </form>

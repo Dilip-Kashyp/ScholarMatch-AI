@@ -21,20 +21,6 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
     },
   },
 
-  GET_ALL_BUTTON_CONFIG: {
-    buttonProps: {
-      variant: "contained",
-      children: "Get all",
-      size: "large",
-      sx: {
-        backgroundColor: "#2c3e50",
-        color: "#fff",
-        "&:hover": {
-          backgroundColor: "#2c3e50",
-        },
-      },
-    },
-  },
   SEARCH_INPUT: {
     inputProps: {
       placeholder:

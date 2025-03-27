@@ -1,14 +1,11 @@
-import { apiClient } from "@/helper";
+// import { apiClient } from "@/helper";
+import { apiConstantsURL } from "@/constants";
+import { api } from "@/helper";
 import { useMutation } from "@tanstack/react-query";
 
-async function getRegistrationHandler({ name, email, password }) {
-  const response = await apiClient({
-    url: "/users/register",
-    method: "POST",
-    body: { name, email, password },
-  });
-  return response;
-}
+export const getRegistrationHandler = ({ data }) => {
+  return api.post(`${apiConstantsURL.users.register}`, data);
+};
 
 export const useRegistrationHandler = ({ mutationConfig }) => {
   const { onSuccess, onError, ...restConfig } = mutationConfig || {};

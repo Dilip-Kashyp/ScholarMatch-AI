@@ -1,35 +1,51 @@
-const BASE_URL = "https://scholar-match-ai-be.onrender.com/api/v1";
-// const BASE_URL = "http://localhost:5400/api/v1";
+import Axios from "axios";
+import { LOCAL_STORAGE_KEY } from "@/constants";
+import { getItem } from "./cookieStorage";
 
-export async function apiClient({
-  url,
-  method = "GET",
-  body = null,
-  headers = {},
-}) {
-  try {
-    const token = localStorage.getItem("token");
-
-    const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
-
-    const response = await fetch(`${BASE_URL}${url}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        ...authHeaders,
-        ...headers,
-      },
-      body: body ? JSON.stringify(body) : null,
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! : ${response}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("API Client Error:", error.message);
-    throw error;
+function authRequestInterceptor(config) {
+  if (config.headers) {
+    config.headers.Accept = "application/json";
   }
+  const accessToken = getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
+  if (accessToken) {
+    config.headers.Authorization = `Token ${accessToken}`;
+  }
+  return config;
+}
+
+export const api = Axios.create({
+  baseURL: "http://localhost:5400/api/v1",
+});
+
+api.interceptors.request.use(authRequestInterceptor);
+api.interceptors.response.use(
+  (response) => {
+    return response?.data;
+  },
+  (error) => {
+    const message = error.response?.data?.message || error.message;
+    console.error(message, "API Error");
+    // if (error.response?.status === 401) {
+    //   if (typeof window !== "undefined") {
+    //     const searchParams = new URLSearchParams();
+    //     const redirectTo = searchParams.get("redirectTo");
+    //     if (redirectTo) {
+    //       window.location.href = `/auth/login?redirectTo=${redirectTo}`;
+    //     } else {
+    //       window.location.href = "/auth/login";
+    //     }
+    //   }
+    // }
+
+    return Promise.reject(error);
+  }
+);
+
+export function getresponseError(error) {
+  const isString = typeof error?.response?.data?.message === "string";
+  return {
+    message: isString
+      ? error?.response?.data?.message || "Internal Server Error"
+      : "Internal Server Error",
+  };
 }

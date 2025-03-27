@@ -1,10 +1,19 @@
 import { useRouter } from "next/router";
 import { Toolbar, Box } from "@mui/material";
 import { Button, Stack } from "@/components";
-import { MENU_ITEMS } from "@/constants";
+import { LOGIN_URL, MENU_ITEMS } from "@/constants";
 import { NAVBAR_STACK_CONFIG } from "@/constants";
+import { clearAllCookie, isUserAuthenticated, useNotification } from "@/helper";
 function NavBar() {
   const router = useRouter();
+  const { showNotification } = useNotification();
+  function logoutUser() {
+    clearAllCookie();
+    showNotification({ message: "Logout successfully" });
+    router.push(LOGIN_URL);
+  }
+
+  const isLoggedIn = isUserAuthenticated();
   return (
     <Stack
       stackProps={{
@@ -31,18 +40,22 @@ function NavBar() {
             gap: { xs: 0, sm: 6 },
             flexDirection: "row",
             width: "auto",
-
-
           }}
         >
-          {MENU_ITEMS.map((item) => (
+          {MENU_ITEMS(isLoggedIn).map((item) => (
             <Button
               key={item.id}
               buttonProps={{
                 children: item.label,
                 ...NAVBAR_STACK_CONFIG,
               }}
-              onClick={() => router.push(item.path)}
+              onClick={() => {
+                if (item.id === "auth" && isLoggedIn) {
+                  logoutUser();
+                } else {
+                  router.push(item.path);
+                }
+              }}
             />
           ))}
         </Box>

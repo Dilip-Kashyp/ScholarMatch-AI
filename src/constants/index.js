@@ -8,3 +8,5 @@ export * from "./scholarship";
 export * from "./about";
 export * from "./navigationsUrl";
 export * from "./forgetPassword";
+export * from "./apiConstantsURL";
+export * from "./dashboard";

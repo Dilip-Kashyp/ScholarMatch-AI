@@ -8,10 +8,10 @@ import {
   Paper,
   LoadingButton,
 } from "@/components";
-import { LOGIN_FORM_CONFIG } from "@/constants";
+import { LOCAL_STORAGE_KEY, LOGIN_FORM_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
 import { useLoginHandler } from "@/api";
-import { useForm, useNotification } from "@/helper";
+import { getresponseError, setIteam, useForm, useNotification } from "@/helper";
 import { DASHBOARD_URL, FORGOT_PASSWORD_URL, REGISTER_URL } from "@/constants";
 
 function LoginPage() {
@@ -28,31 +28,35 @@ function LoginPage() {
   const router = useRouter();
 
   const { showNotification } = useNotification();
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState(null);
 
-  const { mutate: LoginHander } = useLoginHandler({
+  const LoginHander = useLoginHandler({
     mutationConfig: {
       onSuccess: (response) => {
         if (response?.token) {
-          setData(response);
           showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
+          setIteam(LOCAL_STORAGE_KEY.ACCESS_TOKEN, response?.token);
           setIsLoading(false);
           router.push(DASHBOARD_URL);
         }
       },
-      onError: () => {
+      onError: (err) => {
         setIsLoading(false);
-        showNotification(NOTIFICATIONS_MESSAGES.ERROR);
+        console.log("err", err);
+        showNotification({ ...getresponseError(err) });
       },
     },
   });
 
-  const handleFormSuccess = (values) => {
+  function handleFormSuccess({ values }) {
     setIsLoading(true);
-    LoginHander(values.values);
-  };
+    LoginHander.mutate({
+      data: {
+        email: values.email,
+        password: values.password,
+      },
+    });
+  }
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
     initialValues: {

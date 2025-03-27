@@ -1,14 +1,11 @@
-import { apiClient } from "@/helper";
+// import { apiClient } from "@/helper";
+import { apiConstantsURL } from "@/constants";
+import { api } from "@/helper";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-async function getAllScholarshipsHandler(searchQuery) {
-  const response = await apiClient({
-    url: "/scholarships/all-scholarships",
-    method: "POST",
-    body: { searchQuery },
-  });
-  return response;
-}
+export const getAllScholarshipsHandler = (searchQuery) => {
+  return api.post(`${apiConstantsURL.users.scholarships}`, searchQuery);
+};
 
 export const useGetSearchedScholarships = ({ mutationConfig }) => {
   const queryClient = useQueryClient();
@@ -40,5 +37,6 @@ export const useGetAllScholarships = (queryConfig) => {
       onError?.(...args);
     },
     ...restConfig,
+    mutationFn: getAllScholarshipsHandler,
   });
 };

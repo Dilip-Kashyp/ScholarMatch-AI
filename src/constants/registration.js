@@ -62,4 +62,7 @@ export const REGISTRATION_FORM_CONFIG = {
       align: "center",
     },
   },
+  NOTIFICATIONS_MESSAGES: {
+    SUCCESS: { message: "Account created successfully" },
+  },
 };

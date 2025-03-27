@@ -5,12 +5,11 @@ import {
   Typography,
   Button,
   Input,
-  Notification,
   LoadingButton,
 } from "@/components";
-import { REGISTRATION_FORM_CONFIG } from "@/constants";
+import { LOGIN_URL, REGISTRATION_FORM_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
-import { useForm } from "@/helper";
+import { getresponseError, useForm, useNotification } from "@/helper";
 import { useState } from "react";
 import { useRegistrationHandler } from "@/api";
 function RegistrationForm() {
@@ -23,33 +22,37 @@ function RegistrationForm() {
     NAME_INPUT,
     LOGIN_LINK,
     ALREADY_HAVE_ACCOUNT,
+    NOTIFICATIONS_MESSAGES,
   } = REGISTRATION_FORM_CONFIG;
   const router = useRouter();
-  const [notificationMessage, setNotificationMessage] = useState("");
-  const [open, setOpen] = useState(false);
+  const { showNotification } = useNotification();
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleFormSuccess = (values) => {
-    setIsLoading(true);
-    registrationHander(values.values);
-  };
-
-  const { mutate: registrationHander } = useRegistrationHandler({
+  const registrationHandler = useRegistrationHandler({
     mutationConfig: {
       onSuccess: () => {
-        showNotification("Account created successfully");
+        showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
         setIsLoading(false);
+        router.push(LOGIN_URL);
       },
-      onError: () => {
+      onError: (err) => {
         setIsLoading(false);
-        showNotification("Email already exists");
+        console.log("err", err);
+        showNotification({ ...getresponseError(err) });
       },
     },
   });
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  function handleFormSuccess({ values }) {
+    setIsLoading(true);
+    registrationHandler.mutate({
+      data: {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      },
+    });
+  }
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
     initialValues: {
@@ -59,11 +62,6 @@ function RegistrationForm() {
     },
     onSuccess: handleFormSuccess,
   });
-
-  const showNotification = (message) => {
-    setNotificationMessage(message);
-    setOpen(true);
-  };
 
   return (
     <Container
@@ -115,11 +113,6 @@ function RegistrationForm() {
           <Button {...LOGIN_LINK} onClick={() => router.push("/login")} />
         </Stack>
       </Paper>
-      <Notification
-        message={notificationMessage}
-        open={open}
-        onClose={handleClose}
-      />
     </Container>
   );
 }

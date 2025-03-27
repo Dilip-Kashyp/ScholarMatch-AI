@@ -1,24 +1,18 @@
-import { Tabs } from "@/components/common";
+import { Button, Tabs } from "@/components/common";
 import { useMemo } from "react";
 import Profile from "./profile";
-import Scholarship from "./scholarship";
 import AppliedScholarships from "./appliedScholarships";
 import Dashboard from "./dashBoard";
+import { ScholarshipsPage } from "..";
 
 function JobSeekerProfile() {
   const tabItems = useMemo(() => {
     return [
       {
-        label: "Dashboard",
-        value: "dashboardInformation",
-        key: "dashboardInformation",
+        label: "Overall Information",
+        value: "OverallInformation",
+        key: "OverallInformation",
         children: <Dashboard />,
-      },
-      {
-        label: "scholarships",
-        value: "scholarshipInformation",
-        key: "scholarshipInformation",
-        children: <Scholarship />,
       },
       {
         label: "applied scholarships",
@@ -27,10 +21,10 @@ function JobSeekerProfile() {
         children: <AppliedScholarships />,
       },
       {
-        label: "profile",
-        value: "profileInformation",
-        key: "profileInformation",
-        children: <Profile />,
+        label: "scholarships for you",
+        value: "scholarshipInformation",
+        key: "scholarshipInformation",
+        children: <ScholarshipsPage />,
       },
     ];
   }, []);
@@ -44,8 +38,8 @@ function JobSeekerProfile() {
           sx: {
             borderBottom: 1,
             borderColor: "divider",
-            marginLeft: { sm: "25%", xs: 0 },
-            marginRight: { sm: "32%", xs: 0 },
+            marginLeft: { sm: "20%", xs: 0 },
+            marginRight: { sm: "30%", xs: 0 },
             marginTop: { sm: "20px", xs: 0 },
             marginBottom: 2,
           },

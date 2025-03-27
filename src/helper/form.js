@@ -1,5 +1,6 @@
-import { useFormik } from "formik";
+"use client";
 import { useRef } from "react";
+import { useFormik } from "formik";
 
 export function useForm({ initialValues, onSuccess }) {
   const isFormTriedToBeSubmitted = useRef(false);

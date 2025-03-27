@@ -1,14 +1,10 @@
-import { apiClient } from "@/helper";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiConstantsURL } from "@/constants";
+import { api } from "@/helper";
+import { useMutation } from "@tanstack/react-query";
 
-async function getLoginHandler({ email, password }) {
-  const response = await apiClient({
-    url: "/users/login",
-    method: "POST",
-    body: { email, password },
-  });
-  return response;
-}
+export const getLoginHandler = ({ data }) => {
+  return api.post(`${apiConstantsURL.users.login}`, data);
+};
 
 export const useLoginHandler = ({ mutationConfig }) => {
   const { onSuccess, onError, ...restConfig } = mutationConfig || {};

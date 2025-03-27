@@ -9,25 +9,22 @@ import {
   Scholarships,
 } from "../common";
 import { HOME_PAGE_CONFIG } from "@/constants";
-import { useForm, useNotification } from "@/helper";
+import { getresponseError, useForm, useNotification } from "@/helper";
 import { useGetSearchedScholarships } from "@/api";
 
 function HomePage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const scholarshipsRef = useRef(null);
   const { showNotification } = useNotification();
   const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD, NOTIFICATIONS_MESSAGES } =
     HOME_PAGE_CONFIG;
 
-  const { mutate: getScholarshipsData } = useGetSearchedScholarships({
+  const getScholarshipsData = useGetSearchedScholarships({
     mutationConfig: {
       onSuccess: (response) => {
         if (response?.data?.length > 0) {
           setData(response);
           showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
-          setIsLoading(false);
           setTimeout(() => {
             if (scholarshipsRef.current) {
               scholarshipsRef.current.scrollIntoView({
@@ -40,9 +37,8 @@ function HomePage() {
           showNotification(NOTIFICATIONS_MESSAGES.ERROR);
         }
       },
-      onError: () => {
-        setIsLoading(false);
-        showNotification(NOTIFICATIONS_MESSAGES.ERROR);
+      onError: (err) => {
+        showNotification({ ...getresponseError(err) });
       },
     },
   });
@@ -50,7 +46,6 @@ function HomePage() {
   const handleFormSuccess = ({ values }) => {
     if (values.searchQuery) {
       getScholarshipsData(values.searchQuery);
-      setIsLoading(true);
     } else {
       showNotification(NOTIFICATIONS_MESSAGES.SEARCH_ERROR);
     }
@@ -87,7 +82,10 @@ function HomePage() {
               }}
             >
               <Input {...INPUT_FIELD} onChange={onChange} onBlur={onBlur} />
-              <LoadingButton loading={isLoading} {...BUTTON_CONFIG} />
+              <LoadingButton
+                loading={getScholarshipsData.isPending}
+                {...BUTTON_CONFIG}
+              />
             </Stack>
           </form>
         </Stack>
