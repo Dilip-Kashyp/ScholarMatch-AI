@@ -8,15 +8,14 @@ function authRequestInterceptor(config) {
   }
   const accessToken = getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
   if (accessToken) {
-    config.headers.Authorization = `Token ${accessToken}`;
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
   return config;
 }
 
 export const api = Axios.create({
-  // baseURL: "http://localhost:5400/api/v1",
-  baseURL: "https://scholar-match-ai-be.onrender.com/api/v1",
-
+  baseURL: "http://localhost:5400/api/v1",
+  // baseURL: "https://scholar-match-ai-be.onrender.com/api/v1",
 });
 
 api.interceptors.request.use(authRequestInterceptor);
@@ -26,7 +25,6 @@ api.interceptors.response.use(
   },
   (error) => {
     const message = error.response?.data?.message || error.message;
-    console.error(message, "API Error");
     // if (error.response?.status === 401) {
     //   if (typeof window !== "undefined") {
     //     const searchParams = new URLSearchParams();

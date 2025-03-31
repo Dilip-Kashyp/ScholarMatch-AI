@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Button,
   Input,
@@ -28,7 +27,6 @@ function LoginPage() {
   const router = useRouter();
 
   const { showNotification } = useNotification();
-  const [isLoading, setIsLoading] = useState(false);
 
   const LoginHander = useLoginHandler({
     mutationConfig: {
@@ -36,12 +34,10 @@ function LoginPage() {
         if (response?.token) {
           showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
           setIteam(LOCAL_STORAGE_KEY.ACCESS_TOKEN, response?.token);
-          setIsLoading(false);
           router.push(DASHBOARD_URL);
         }
       },
       onError: (err) => {
-        setIsLoading(false);
         console.log("err", err);
         showNotification({ ...getresponseError(err) });
       },
@@ -49,7 +45,6 @@ function LoginPage() {
   });
 
   function handleFormSuccess({ values }) {
-    setIsLoading(true);
     LoginHander.mutate({
       data: {
         email: values.email,
@@ -92,7 +87,7 @@ function LoginPage() {
             <Typography {...LOGIN_HEADER} />
             <Input {...EMAIL_INPUT} onChange={onChange} onBlur={onBlur} />
             <Input {...PASSWORD_INPUT} onChange={onChange} onBlur={onBlur} />
-            <LoadingButton {...BUTTON} loading={isLoading} />
+            <LoadingButton {...BUTTON} loading={LoginHander.isPending} />
           </Stack>
         </form>
         <Button

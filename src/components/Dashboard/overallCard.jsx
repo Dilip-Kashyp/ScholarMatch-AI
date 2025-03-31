@@ -7,7 +7,7 @@ function OverallCard({ title, count, bgColor }) {
       stackProps={{
         className: "my-2 rounded-lg px-5 py-6 shadow-md",
         height: "100px",
-        width: "280px",
+        width: { xs: "100%", sm: "280px" },
         justifyContent: "space-between",
         bgcolor: bgColor,
         direction: "row",

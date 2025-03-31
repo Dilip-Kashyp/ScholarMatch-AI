@@ -27,24 +27,20 @@ function RegistrationForm() {
   const router = useRouter();
   const { showNotification } = useNotification();
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const registrationHandler = useRegistrationHandler({
     mutationConfig: {
       onSuccess: () => {
         showNotification(NOTIFICATIONS_MESSAGES.SUCCESS);
-        setIsLoading(false);
+   
         router.push(LOGIN_URL);
       },
       onError: (err) => {
-        setIsLoading(false);
         console.log("err", err);
         showNotification({ ...getresponseError(err) });
       },
     },
   });
   function handleFormSuccess({ values }) {
-    setIsLoading(true);
     registrationHandler.mutate({
       data: {
         name: values.name,
@@ -97,7 +93,7 @@ function RegistrationForm() {
               <Input {...NAME_INPUT} onChange={onChange} onBlur={onBlur} />
               <Input {...EMAIL_INPUT} onChange={onChange} onBlur={onBlur} />
               <Input {...PASSWORD_INPUT} onChange={onChange} onBlur={onBlur} />
-              <LoadingButton loading={isLoading} {...BUTTON} />
+              <LoadingButton loading={registrationHandler.isPending} {...BUTTON} />
             </Stack>
           </form>
         </Stack>

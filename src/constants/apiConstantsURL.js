@@ -7,7 +7,10 @@ export const apiConstantsURL = {
     logout: `users/logout-user`,
     updatePassword: `users/update-password`,
     resetPassword: `/verify-otp-password-reset/`,
-    scholarships : `/scholarships/all-scholarships/`
+    scholarships: `/scholarships/all-scholarships/`,
   },
-  
+  scholarships: {
+    overallStatus: `scholarships/overall-status`,
+    overallAppliedStatus: `scholarships/get-applied-scholarships`,
+  },
 };
