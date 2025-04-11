@@ -27,6 +27,15 @@ export const SCHOLARSHIP_APPLICATION_PAGE_CONFIG = {
       },
     };
   },
+  SCHOLARSHIP_DEADLINE: (date) => {
+    return {
+      typographyProps: {
+        variant: "body2",
+        children: `Deadline: ${date}`,
+        sx: { color: "#555" },
+      },
+    };
+  },
   SCHOLARSHIP_STATUS: (status) => {
     return {
       typographyProps: {

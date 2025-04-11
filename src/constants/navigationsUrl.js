@@ -8,12 +8,14 @@ export const DASHBOARD_URL = "/dashboard";
 export const COURSES_URL = "/courses";
 export const COURSES_DETAILS_URL = "/course-details";
 export const ACCOUNT_VERIFICATION_URL = "/account-verification";
+export const PROFILE_URL = "/profile";
 
 export const PRIVATE_ROUTES_CONFIG = [
   DASHBOARD_URL,
   COURSES_URL,
   COURSES_DETAILS_URL,
   HOME_URL,
+  PROFILE_URL,
 ];
 
 export const PRIVATE_PUBLIC_ROUTES_CONFIG = [

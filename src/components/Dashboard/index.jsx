@@ -1,13 +1,12 @@
 import { Button, Tabs } from "@/components/common";
 import { useState, useEffect, useMemo } from "react";
 import Dashboard from "./dashBoard";
-import ScholarshipApplicationCard from "./ScholarshipApplicationCard";
+import ScholarshipForYou from "./ScholarshipForYou";
 
 function JobSeekerProfile() {
   const [tabItems, setTabItems] = useState([]);
 
   useEffect(() => {
-    // Fetch or compute tabs dynamically (e.g., based on user role, API response, etc.)
     const fetchTabs = async () => {
       const tabs = [
         {
@@ -17,10 +16,10 @@ function JobSeekerProfile() {
           children: <Dashboard />,
         },
         {
-          label: "Applied Scholarships",
-          value: "appliedScholarships",
-          key: "appliedScholarships",
-          children: <ScholarshipApplicationCard />,
+          label: "Scholarships For You",
+          value: "scholarshipsForYou",
+          key: "scholarshipsForYou",
+          children: <ScholarshipForYou />,
         },
       ];
       setTabItems(tabs);

@@ -11,3 +11,4 @@ export * from "./forgetPassword";
 export * from "./apiConstantsURL";
 export * from "./dashboard";
 export * from "./scholarshipApplicationCard";
+export * from "./profilePage";

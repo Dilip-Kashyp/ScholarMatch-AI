@@ -44,11 +44,9 @@ function HomePage() {
   });
 
   const handleFormSuccess = ({ values }) => {
-    if (values.searchQuery) {
-      getScholarshipsData(values.searchQuery);
-    } else {
-      showNotification(NOTIFICATIONS_MESSAGES.SEARCH_ERROR);
-    }
+    getScholarshipsData.mutate({
+      search: values.search,
+    });
   };
 
   const { onSubmit, onChange, onBlur } = useForm({

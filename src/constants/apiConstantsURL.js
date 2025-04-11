@@ -8,9 +8,11 @@ export const apiConstantsURL = {
     updatePassword: `users/update-password`,
     resetPassword: `/verify-otp-password-reset/`,
     scholarships: `/scholarships/all-scholarships/`,
+    createProfile: `/users/create-profile`,
   },
   scholarships: {
     overallStatus: `scholarships/overall-status`,
     overallAppliedStatus: `scholarships/get-applied-scholarships`,
+    personalizedScholarships: `scholarships/personalized-scholarships`,
   },
 };

@@ -1,14 +1,12 @@
-import { usegetAppliedStatus } from "@/api";
 import { CircularProgressIcon } from "@/assets";
 import { Button, Paper, Stack, Typography, Container } from "@/components";
 import { SCHOLARSHIP_APPLICATION_PAGE_CONFIG } from "@/constants";
-import { useEffect, useState } from "react";
 
-function ScholarshipApplicationCard({ data, getAppliedStatus }) {
+function PersonalizedScholarships({ data, getAppliedStatus }) {
   const {
     SCHOLARSHIP_NAME,
     SCHOLARSHIP_AMOUNT,
-    SCHOLARSHIP_APPLIED,
+    SCHOLARSHIP_DEADLINE,
     SCHOLARSHIP_STATUS,
   } = SCHOLARSHIP_APPLICATION_PAGE_CONFIG;
 
@@ -49,19 +47,16 @@ function ScholarshipApplicationCard({ data, getAppliedStatus }) {
                     alignItems: "center",
                   }}
                 >
-                  <Typography {...SCHOLARSHIP_NAME(item.Scholarship.name)} />
-                  <Typography
-                    {...SCHOLARSHIP_AMOUNT(item.Scholarship.amount)}
-                  />
+                  <Typography {...SCHOLARSHIP_NAME(item.name)} />
+                  <Typography {...SCHOLARSHIP_AMOUNT(item.amount)} />
                 </Stack>
 
                 <Stack stackProps={{ gap: 1 }}>
                   <Typography
-                    {...SCHOLARSHIP_APPLIED(
-                      new Date(item.createdAt).toLocaleDateString()
+                    {...SCHOLARSHIP_DEADLINE(
+                      new Date(item.deadline).toLocaleDateString()
                     )}
                   />
-                  <Typography {...SCHOLARSHIP_STATUS(item.status)} />
                 </Stack>
 
                 <Stack
@@ -97,4 +92,4 @@ function ScholarshipApplicationCard({ data, getAppliedStatus }) {
   );
 }
 
-export default ScholarshipApplicationCard;
+export default PersonalizedScholarships;

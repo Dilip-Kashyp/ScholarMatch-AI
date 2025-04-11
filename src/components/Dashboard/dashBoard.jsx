@@ -1,14 +1,32 @@
 import { Container, Paper, Stack } from "@/components";
 import { DASHBOARD_PAGE_CONFIG } from "@/constants";
 import OverallCard from "./overallCard";
-import { useGetOverallStatus } from "@/api";
+import { usegetAppliedStatus, useGetOverallStatus } from "@/api";
 import { getresponseError, useNotification } from "@/helper";
 import { useEffect, useState } from "react";
+import ScholarshipApplicationCard from "./scholarshipApplicationCard";
 
 function Dashboard() {
   const { HEADING } = DASHBOARD_PAGE_CONFIG;
   const [data, setData] = useState(0);
   const { showNotification } = useNotification();
+
+  const [cardData, setCardData] = useState([]);
+
+  const getAppliedStatus = usegetAppliedStatus({
+    mutationConfig: {
+      onSuccess: (res) => {
+        setCardData(res.data);
+      },
+      onError: (err) => {
+        showNotification({ ...getresponseError(err) });
+      },
+    },
+  });
+
+  useEffect(() => {
+    getAppliedStatus.mutate({});
+  }, []);
 
   const OverallStatus = useGetOverallStatus({
     mutationConfig: {
@@ -29,7 +47,7 @@ function Dashboard() {
     <>
       <Container
         containerProps={{
-          className: "min-h-screen flex flex-col gap-12 py-8 px-4 md:px-12",
+          className: "flex flex-col  py-8 px-4 md:px-12",
         }}
       >
         {/* <Typography {...HEADING} /> */}
@@ -39,7 +57,7 @@ function Dashboard() {
             flexWrap: "wrap",
             justifyContent: "center",
             alignItems: "center",
-            gap: {xs: 2, sm: 4 },
+            gap: { xs: 2, sm: 4 },
           }}
         >
           <OverallCard
@@ -59,6 +77,10 @@ function Dashboard() {
           />
         </Stack>
       </Container>
+      <ScholarshipApplicationCard
+        data={cardData}
+        getAppliedStatus={getAppliedStatus}
+      />
     </>
   );
 }
