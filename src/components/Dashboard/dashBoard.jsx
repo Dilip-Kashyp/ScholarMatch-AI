@@ -4,10 +4,9 @@ import OverallCard from "./overallCard";
 import { usegetAppliedStatus, useGetOverallStatus } from "@/api";
 import { getresponseError, useNotification } from "@/helper";
 import { useEffect, useState } from "react";
-import ScholarshipApplicationCard from "./scholarshipApplicationCard";
+import ScholarshipApplicationCard from "./ScholarshipApplicationCard";
 
 function Dashboard() {
-  const { HEADING } = DASHBOARD_PAGE_CONFIG;
   const [data, setData] = useState(0);
   const { showNotification } = useNotification();
 
