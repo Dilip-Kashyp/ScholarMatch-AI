@@ -20,3 +20,22 @@ export const useGetCreateProfile = ({ mutationConfig }) => {
     mutationFn: getCreateProfile,
   });
 };
+
+export const getProfileDetails = () => {
+  return api.get(`${apiConstantsURL.users.profileData}`);
+};
+
+export const useProfileDetails = ({ mutationConfig }) => {
+  const { onSuccess, onError, ...restConfig } = mutationConfig || {};
+
+  return useMutation({
+    onSuccess: (...args) => {
+      onSuccess?.(...args);
+    },
+    onError: (...args) => {
+      onError?.(...args);
+    },
+    ...restConfig,
+    mutationFn: getProfileDetails,
+  });
+};

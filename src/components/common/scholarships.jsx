@@ -1,5 +1,7 @@
-import { Button, Chip, Paper, Stack, Typography } from ".";
+import { useApplyScholarship } from "@/api";
+import { Button, Chip, LoadingButton, Paper, Stack, Typography } from ".";
 import { SCHOLARSHIP_DETAILS_CARD_CONFIG } from "@/constants";
+import { getresponseError, useNotification } from "@/helper";
 
 function Scholarships({ scholarship }) {
   const {
@@ -11,6 +13,27 @@ function Scholarships({ scholarship }) {
     CATEGORIES_CONFIG,
     ACTIVE_CONFIG,
   } = SCHOLARSHIP_DETAILS_CARD_CONFIG;
+
+  const { showNotification } = useNotification();
+
+  const applyScholarship = useApplyScholarship({
+    mutationConfig: {
+      onSuccess: (res) => {
+        console.log("Apply scholarship response", res);
+        showNotification({ message: res?.message });
+      },
+      onError: (err) => {
+        showNotification(getresponseError(err));
+        console.error(err);
+      },
+    },
+  });
+
+  const handleApply = () => {
+    applyScholarship.mutate({ data: { scholarship_id: scholarship.id } });
+    console.log("Apply scholarship", scholarship.id);
+  };
+
   return (
     <Paper
       paperProps={{
@@ -33,9 +56,7 @@ function Scholarships({ scholarship }) {
         <Stack stackProps={{ gap: 1 }}>
           <Typography {...DEADLINE_CONFIG(scholarship.deadline)} />
           <Typography {...LOCATION_CONFIG(scholarship.location)} />
-          <Typography
-            {...ELIGIBILITY_CONFIG(scholarship.gender )}
-          />
+          <Typography {...ELIGIBILITY_CONFIG(scholarship.gender)} />
           <Typography {...CATEGORIES_CONFIG(scholarship.category)} />
         </Stack>
 
@@ -59,9 +80,13 @@ function Scholarships({ scholarship }) {
             justifyContent: "space-between",
           }}
         >
-          <Button
+          <LoadingButton
+            onClick={() => {
+              handleApply();
+            }}
+            loading={handleApply.isPending}
             buttonProps={{
-              children: "View Details",
+              children: "Apply Now",
 
               sx: {
                 backgroundColor: "#2c3e50",

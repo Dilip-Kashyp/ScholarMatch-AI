@@ -42,7 +42,7 @@ export const PROFILE_PAGE_CONFIG = {
     inputProps: {
       label: "Caste",
       required: true,
-      name: "caste",
+      name: "category",
       type: "text",
     },
     formControlProps: {
@@ -67,7 +67,7 @@ export const PROFILE_PAGE_CONFIG = {
       children: "Religion",
     },
     selectProps: {
-      name: "religion",
+      name: "religious",
       required: true,
     },
     formControlProps: {
@@ -159,7 +159,7 @@ export const PROFILE_PAGE_CONFIG = {
       sx: {
         backgroundColor: "#2c3e50",
         color: "#fff",
-        width: "200px",
+        width: "300px",
       },
     },
   },

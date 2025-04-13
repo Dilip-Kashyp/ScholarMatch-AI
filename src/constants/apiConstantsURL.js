@@ -9,10 +9,12 @@ export const apiConstantsURL = {
     resetPassword: `/verify-otp-password-reset/`,
     scholarships: `/scholarships/all-scholarships/`,
     createProfile: `/users/create-profile`,
+    profileData: `/users/get-user`,
   },
   scholarships: {
     overallStatus: `scholarships/overall-status`,
     overallAppliedStatus: `scholarships/get-applied-scholarships`,
     personalizedScholarships: `scholarships/personalized-scholarships`,
+    applyScholarship: `scholarships/apply-scholarship`,
   },
 };

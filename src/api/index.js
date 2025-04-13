@@ -5,3 +5,4 @@ export * from "./useGetOverallStatus";
 export * from "./useGetScholarshipStatus";
 export * from "./useGetPersonalizedScholarships";
 export * from "./useCreateProfile";
+export * from "./useApplyScholarship";

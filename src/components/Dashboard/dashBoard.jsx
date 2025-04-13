@@ -1,5 +1,4 @@
 import { Container, Paper, Stack } from "@/components";
-import { DASHBOARD_PAGE_CONFIG } from "@/constants";
 import OverallCard from "./overallCard";
 import { usegetAppliedStatus, useGetOverallStatus } from "@/api";
 import { getresponseError, useNotification } from "@/helper";

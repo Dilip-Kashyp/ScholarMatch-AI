@@ -18,12 +18,11 @@ function NavBar() {
     <Stack
       stackProps={{
         backgroundColor: "#2c3e50",
-        width: { xs: "90%", sm: "80%" },
+        width: { xs: "100%", sm: "80%" },
         margin: "auto",
         marginTop: "20px",
         borderRadius: "16px",
         boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-
         border: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >

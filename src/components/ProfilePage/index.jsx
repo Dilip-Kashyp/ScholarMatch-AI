@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect } from "react";
 import {
   Button,
   Input,
@@ -11,7 +13,7 @@ import {
 import { DASHBOARD_URL, PROFILE_PAGE_CONFIG } from "@/constants";
 import { useRouter } from "next/router";
 import { getresponseError, useForm, useNotification } from "@/helper";
-import { useGetCreateProfile } from "@/api";
+import { useProfileDetails, useGetCreateProfile } from "@/api";
 
 function ProfilePage() {
   const {
@@ -48,35 +50,62 @@ function ProfilePage() {
     },
   });
 
-  function handleFormSuccess({ values }) {
-    registerUser.mutate({
-      data: {
-        name: values.name,
-        email: values.email,
-        caste: values.caste,
-        religion: values.religion,
-        gender: values.gender,
-        age: values.age,
-        academicDetails: values.academicDetails,
-        location: values.location,
-        password: values.password,
-      },
-    });
-  }
-
-  const { onSubmit, errorObj, onBlur, onChange, formValuesObj } = useForm({
+  const { onSubmit, onBlur, onChange, formValuesObj, setValues } = useForm({
     initialValues: {
       name: "",
       email: "",
-      caste: "",
-      religion: "",
+      password: "",
+      category: "",
+      religious: "",
       gender: "",
       age: "",
       academicDetails: "",
       location: "",
     },
-    onSuccess: handleFormSuccess,
+    onSuccess: ({ values }) => {
+      registerUser.mutate({
+        data: {
+          name: values.name,
+          email: values.email,
+          category: values.category,
+          religious: values.religious,
+          gender: values.gender,
+          age: values.age,
+          academicDetails: values.academicDetails,
+          location: values.location,
+          password: values.password,
+        },
+      });
+    },
   });
+
+  const profileDetails = useProfileDetails({
+    mutationConfig: {
+      onSuccess: (res) => {
+        const data = res.data;
+        setValues({
+          name: data.name || "",
+          email: data.email || "",
+          password: data.password || "",
+          category: data.category || "",
+          religious: data.religious || "",
+          gender: data.gender || "",
+          age: data.age || "",
+          academicDetails: data.academicDetails || "",
+          location: data.location || "",
+        });
+      },
+      onError: (error) => {
+        showNotification({
+          ...getresponseError(error),
+        });
+      },
+    },
+  });
+
+  useEffect(() => {
+    profileDetails.mutate({});
+  }, []);
 
   return (
     <Container
@@ -94,15 +123,16 @@ function ProfilePage() {
         <Stack
           stackProps={{
             width: "100%",
-            flexDirection: "row",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: "center",
           }}
         >
           <Stack
             stackProps={{
-              width: "50%",
+              width: { sm: "50%", xs: "100%" },
               alignItems: "center",
               justifyContent: "flex-start",
-              padding: 4,
+              padding: { sm: 4, xs: 2 },
             }}
           >
             <Stack stackProps={{ alignItems: "center", marginBottom: 4 }}>
@@ -116,13 +146,30 @@ function ProfilePage() {
                 maxWidth: "400px",
               }}
             >
-              <Input {...NAME_INPUT} onChange={onChange} onBlur={onBlur} />
-              <Input {...EMAIL_INPUT} onChange={onChange} onBlur={onBlur} />
-              <Input {...CASTE_INPUT} onChange={onChange} onBlur={onBlur} />
+              <Input
+                {...NAME_INPUT}
+                value={formValuesObj?.name}
+                onChange={onChange}
+                onBlur={onBlur}
+              />
+              <Input
+                {...EMAIL_INPUT}
+                value={formValuesObj?.email}
+                onChange={onChange}
+                onBlur={onBlur}
+              />
+              <Input
+                {...CASTE_INPUT}
+                name="category"
+                value={formValuesObj?.category}
+                onChange={onChange}
+                onBlur={onBlur}
+              />
               <Dropdown
                 {...RELIGION_DROPDOWN}
+                name="religious"
                 onChange={onChange}
-                value={formValuesObj?.religion}
+                value={formValuesObj?.religious}
                 onBlur={onBlur}
               />
             </Stack>
@@ -130,10 +177,10 @@ function ProfilePage() {
 
           <Stack
             stackProps={{
-              width: "50%",
+              width: { sm: "50%", xs: "100%" },
               alignItems: "center",
               justifyContent: "flex-start",
-              padding: 4,
+              padding: { sm: 4, xs: 2 },
             }}
           >
             <Stack stackProps={{ alignItems: "center", marginBottom: 4 }}>
@@ -149,19 +196,27 @@ function ProfilePage() {
             >
               <Dropdown
                 {...GENDER_DROPDOWN}
+                name="gender"
                 onChange={onChange}
                 value={formValuesObj?.gender}
                 onBlur={onBlur}
               />
-              <Input {...AGE_INPUT} onChange={onChange} onBlur={onBlur} />
+              <Input
+                {...AGE_INPUT}
+                value={formValuesObj?.age}
+                onChange={onChange}
+                onBlur={onBlur}
+              />
               <Dropdown
                 {...LOCATION_DROPDOWN}
+                name="location"
                 onChange={onChange}
                 value={formValuesObj?.location}
                 onBlur={onBlur}
               />
               <Input
                 {...ACADEMIC_DETAILS_INPUT}
+                value={formValuesObj?.academicDetails}
                 onChange={onChange}
                 onBlur={onBlur}
               />

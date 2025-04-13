@@ -6,16 +6,16 @@ function FeaturePage() {
   const { FEATURES, HEADER_CONFIG } = FEATURE_PAGE_CONFIG;
 
   return (
-    <Stack stackProps={{gap: 8}}>
+    <Stack stackProps={{ gap: 8 }}>
       <Typography {...HEADER_CONFIG} />
-      <Stack 
-        stackProps={{   
-          direction: 'row',
-          flexWrap: 'wrap',
+      <Stack
+        stackProps={{
+          direction: "row",
+          flexWrap: "wrap",
           gap: 6,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: '100px',
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "100px",
         }}
       >
         {FEATURES.map((feature, index) => (
