@@ -234,7 +234,7 @@ function ProfilePage() {
             marginBottom: 4,
           }}
         >
-          <LoadingButton {...BUTTON} />
+          <LoadingButton {...BUTTON} loading={registerUser.isPending} />
         </Stack>
       </form>
     </Container>

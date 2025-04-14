@@ -1,35 +1,17 @@
 // import { apiClient } from "@/helper";
 import { apiConstantsURL } from "@/constants";
 import { api } from "@/helper";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const getAllScholarshipsHandler = (searchQuery) => {
-  return api.post(`${apiConstantsURL.users.scholarships}`, searchQuery);
+export const getAllScholarshipsHandler = ({ data }) => {
+  console.log("data", data);
+  return api.post(`${apiConstantsURL.scholarships.scholarships}`, data);
 };
 
-export const useGetSearchedScholarships = ({ mutationConfig }) => {
-  const queryClient = useQueryClient();
+export const useGetAllScholarships = ({ mutationConfig }) => {
   const { onSuccess, onError, ...restConfig } = mutationConfig || {};
 
   return useMutation({
-    onSuccess: (...args) => {
-      queryClient.invalidateQueries({ queryKey: ["scholarships"] });
-      onSuccess?.(...args);
-    },
-    onError: (...args) => {
-      onError?.(...args);
-    },
-    ...restConfig,
-    mutationFn: getAllScholarshipsHandler,
-  });
-};
-
-export const useGetAllScholarships = (queryConfig) => {
-  const { onSuccess, onError, ...restConfig } = queryConfig || {};
-
-  return useQuery({
-    queryKey: ["scholarships"],
-    queryFn: () => getAllScholarshipsHandler(),
     onSuccess: (...args) => {
       onSuccess?.(...args);
     },

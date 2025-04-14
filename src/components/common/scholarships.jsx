@@ -37,9 +37,14 @@ function Scholarships({ scholarship }) {
   return (
     <Paper
       paperProps={{
-        className: "p-4",
-        sx: { width: "350px" },
+        className: "p-8",
+        sx: { width: "100%" },
         elevation: 2,
+        style: {
+          backgroundColor: "#f9fafb",
+          borderRadius: "20px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        },
       }}
     >
       <Stack stackProps={{ gap: 2 }}>
@@ -53,11 +58,17 @@ function Scholarships({ scholarship }) {
           <Typography {...NAME_CONFIG(scholarship.name)} />
           <Typography {...AMOUNT_CONFIG(scholarship.amount)} />
         </Stack>
-        <Stack stackProps={{ gap: 1 }}>
-          <Typography {...DEADLINE_CONFIG(scholarship.deadline)} />
+        <Stack
+          stackProps={{
+            gap: 1,
+            direction: "row",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography {...LOCATION_CONFIG(scholarship.location)} />
           <Typography {...ELIGIBILITY_CONFIG(scholarship.gender)} />
           <Typography {...CATEGORIES_CONFIG(scholarship.category)} />
+          <Typography {...DEADLINE_CONFIG(scholarship.deadline)} />
         </Stack>
 
         {/* <Stack stackProps={{ direction: "row", gap: 1, flexWrap: "wrap" }}>

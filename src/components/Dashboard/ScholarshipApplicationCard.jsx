@@ -39,6 +39,11 @@ function ScholarshipApplicationCard({ data, getAppliedStatus }) {
                 className: "p-6 rounded-2xl shadow-lg border border-gray-200",
                 sx: { width: "100%", backgroundColor: "#f9fafb" },
                 elevation: 3,
+                style: {
+                  backgroundColor: "#f9fafb",
+                  borderRadius: "20px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                },
               }}
             >
               <Stack stackProps={{ gap: 2 }}>

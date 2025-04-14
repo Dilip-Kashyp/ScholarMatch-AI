@@ -4,13 +4,12 @@ import {
   Stack,
   Typography,
   Input,
-  Notification,
   LoadingButton,
   Scholarships,
 } from "../common";
 import { HOME_PAGE_CONFIG } from "@/constants";
 import { getresponseError, useForm, useNotification } from "@/helper";
-import { useGetSearchedScholarships } from "@/api";
+import { useGetAllScholarships } from "@/api";
 
 function HomePage() {
   const [data, setData] = useState([]);
@@ -19,7 +18,7 @@ function HomePage() {
   const { HEADER_CONFIG, BUTTON_CONFIG, INPUT_FIELD, NOTIFICATIONS_MESSAGES } =
     HOME_PAGE_CONFIG;
 
-  const getScholarshipsData = useGetSearchedScholarships({
+  const scholarshipsData = useGetAllScholarships({
     mutationConfig: {
       onSuccess: (response) => {
         if (response?.data?.length > 0) {
@@ -44,9 +43,7 @@ function HomePage() {
   });
 
   const handleFormSuccess = ({ values }) => {
-    getScholarshipsData.mutate({
-      search: values.search,
-    });
+    scholarshipsData.mutate({ data: { searchQuery: values.searchQuery } });
   };
 
   const { onSubmit, onChange, onBlur } = useForm({
@@ -81,7 +78,7 @@ function HomePage() {
             >
               <Input {...INPUT_FIELD} onChange={onChange} onBlur={onBlur} />
               <LoadingButton
-                loading={getScholarshipsData.isPending}
+                loading={scholarshipsData.isPending}
                 {...BUTTON_CONFIG}
               />
             </Stack>

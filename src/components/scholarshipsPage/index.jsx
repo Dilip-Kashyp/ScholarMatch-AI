@@ -9,7 +9,7 @@ import {
   Scholarships,
 } from "@/components";
 import { SCHOLARSHIP_PAGE_CONFIG } from "@/constants";
-import { useGetSearchedScholarships } from "@/api";
+import { useGetAllScholarships } from "@/api";
 import { getresponseError, useForm, useNotification } from "@/helper";
 import { useState } from "react";
 
@@ -18,7 +18,6 @@ function ScholarshipsPage() {
     HEADER_CONFIG,
     SEARCH_INPUT,
     BUTTON_CONFIG,
-    GET_ALL_BUTTON_CONFIG,
     APPLICATION_COUNTER,
     NOTIFICATIONS_MESSAGES,
   } = SCHOLARSHIP_PAGE_CONFIG;
@@ -27,7 +26,7 @@ function ScholarshipsPage() {
 
   const { showNotification } = useNotification();
 
-  const getAllScholarships = useGetSearchedScholarships({
+  const getAllScholarships = useGetAllScholarships({
     mutationConfig: {
       onSuccess: (response) => {
         setData(response);
@@ -42,7 +41,8 @@ function ScholarshipsPage() {
   });
 
   const handleFormSuccess = ({ values }) => {
-    getAllScholarships.mutate({ date: { searchQuery: values.searchQuery } });
+    console.log(values);
+    getAllScholarships.mutate({ data: { searchQuery: values.searchQuery } });
   };
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
