@@ -1,7 +1,7 @@
 export const MENU_ITEMS = (isLoggedIn) => [
   ...(!isLoggedIn
     ? [{ id: "home", label: "Home", path: "/" }]
-    : [{ id: "dashboard", label: "Dashborad", path: "/dashboard" }]),
+    : [{ id: "dashboard", label: "Dashboard", path: "/dashboard" }]),
   { id: "scholarships", label: "Scholarships", path: "/scholarships" },
   { id: "about", label: "About", path: "/about" },
   ...(isLoggedIn ? [{ id: "profile", label: "Profile", path: "profile" }] : []),
