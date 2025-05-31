@@ -15,7 +15,7 @@ function authRequestInterceptor(config) {
 
 export const api = Axios.create({
   // baseURL: "http://localhost:5400/api/v1",
-  baseURL: "https://scholar-match-ai-be.onrender.com/api/v1",
+  baseURL: "http://3.108.229.109/api/v1",
 });
 
 api.interceptors.request.use(authRequestInterceptor);
