@@ -15,7 +15,7 @@ function authRequestInterceptor(config) {
 
 export const api = Axios.create({
   // baseURL: "http://localhost:5400/api/v1",
-  baseURL: "http://3.108.229.109/api/v1",
+  baseURL: "https://scholarship.duckdns.org/api/v1",
 });
 
 api.interceptors.request.use(authRequestInterceptor);
