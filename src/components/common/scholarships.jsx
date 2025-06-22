@@ -19,7 +19,6 @@ function Scholarships({ scholarship }) {
   const applyScholarship = useApplyScholarship({
     mutationConfig: {
       onSuccess: (res) => {
-        console.log("Apply scholarship response", res);
         showNotification({ message: res?.message });
       },
       onError: (err) => {
@@ -31,7 +30,6 @@ function Scholarships({ scholarship }) {
 
   const handleApply = () => {
     applyScholarship.mutate({ data: { scholarship_id: scholarship.id } });
-    console.log("Apply scholarship", scholarship.id);
   };
 
   return (

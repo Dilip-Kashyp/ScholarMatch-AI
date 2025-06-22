@@ -11,18 +11,20 @@ import {
 import { SCHOLARSHIP_PAGE_CONFIG } from "@/constants";
 import { useGetAllScholarships } from "@/api";
 import { getresponseError, useForm, useNotification } from "@/helper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Pagination } from "@mui/material";
 
 function ScholarshipsPage() {
   const {
     HEADER_CONFIG,
     SEARCH_INPUT,
-    BUTTON_CONFIG,
     APPLICATION_COUNTER,
     NOTIFICATIONS_MESSAGES,
   } = SCHOLARSHIP_PAGE_CONFIG;
   const [data, setData] = useState([]);
   const [scholarshipCount, setScholarshipCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 6; 
 
   const { showNotification } = useNotification();
 
@@ -41,9 +43,13 @@ function ScholarshipsPage() {
   });
 
   const handleFormSuccess = ({ values }) => {
-    console.log(values);
+    setPage(1);
     getAllScholarships.mutate({ data: { searchQuery: values.searchQuery } });
   };
+
+  useEffect(() => {
+    getAllScholarships.mutate({ data: { searchQuery: "" } });
+  }, []);
 
   const { onSubmit, errorObj, onBlur, onChange } = useForm({
     initialValues: {
@@ -87,7 +93,21 @@ function ScholarshipsPage() {
             <Stack stackProps={{ direction: "row", gap: 2 }}>
               <LoadingButton
                 loading={getAllScholarships.isPending}
-                {...BUTTON_CONFIG}
+                buttonProps={{
+                  variant: "contained",
+                  children: !getAllScholarships.isPending
+                    ? "Search"
+                    : "Hold on!",
+                  size: "large",
+                  type: "submit",
+                  sx: {
+                    backgroundColor: "#2c3e50",
+                    color: "#fff",
+                    "&:hover": {
+                      backgroundColor: "#2c3e50",
+                    },
+                  },
+                }}
               />
             </Stack>
           </form>
@@ -100,10 +120,22 @@ function ScholarshipsPage() {
             className: "flex-grow",
           }}
         >
-          {data?.data?.map((scholarship) => (
-            <Scholarships scholarship={scholarship} />
-          ))}
+          {data?.data
+            ?.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+            .map((scholarship) => (
+              <Scholarships key={scholarship.id} scholarship={scholarship} />
+            ))}
         </Stack>
+        {data?.data?.length > itemsPerPage && (
+          <Stack stackProps={{ alignItems: "center", mt: 4 }}>
+            <Pagination
+              count={Math.ceil(data.data.length / itemsPerPage)}
+              page={page}
+              onChange={(_, value) => setPage(value)}
+              color="primary"
+            />
+          </Stack>
+        )}
       </Container>
     </>
   );

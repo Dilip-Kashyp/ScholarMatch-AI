@@ -5,21 +5,7 @@ export const SCHOLARSHIP_PAGE_CONFIG = {
       children: "Search Scholarships",
     },
   },
-  BUTTON_CONFIG: {
-    buttonProps: {
-      variant: "contained",
-      children: "Search",
-      size: "large",
-      type: "submit",
-      sx: {
-        backgroundColor: "#2c3e50",
-        color: "#fff",
-        "&:hover": {
-          backgroundColor: "#2c3e50",
-        },
-      },
-    },
-  },
+
 
   SEARCH_INPUT: {
     inputProps: {
