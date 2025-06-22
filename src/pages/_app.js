@@ -4,6 +4,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NotificationProvider } from "@/helper";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Loading from "./loading";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }) {
           <Head>
             <title>ScholarMatch AI</title>
           </Head>
+          <Loading />
           {getLayout(<Component {...pageProps} />)}
         </NotificationProvider>
       </LocalizationProvider>

@@ -14,21 +14,7 @@ export const HOME_PAGE_CONFIG = {
       },
     },
   },
-  BUTTON_CONFIG: {
-    buttonProps: {
-      variant: "contained",
-      children: "Search",
-      size: "large",
-      type: "submit",
-      sx: {
-        backgroundColor: "#2c3e50",
-        color: "#fff",
-        "&:hover": {
-          backgroundColor: "#2c3e50",
-        },
-      },
-    },
-  },
+
   INPUT_FIELD: {
     inputProps: {
       placeholder:
